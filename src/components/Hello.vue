@@ -1,12 +1,9 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
+    <h1></h1>
+    <h2></h2>
+    <ul >
+      <li v-for="item in wish"><a href="https://vuejs.org" target="_blank">{{item.id}}</a></li>
       <br>
       <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
     </ul>
@@ -22,10 +19,24 @@
 
 <script>
 export default {
-  name: 'hello',
+  props: {
+    wish: {
+      type: Array
+    }
+  },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+    }
+  },
+  computed: {
+    selectWishs () {
+      let wishs = []
+      this.wish.forEach((wish) => {
+        if (wish.count) {
+          wishs.push(wish)
+        }
+      })
+      return wishs
     }
   }
 }
