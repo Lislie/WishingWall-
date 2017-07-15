@@ -30,13 +30,11 @@
   }
 </script>
 
-<style>
-  #app {
-    font-family: '造字工房悦圆演示版', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 1rem;
-  }
+<style lang="stylus" scoped>
+  #app
+    font-family 'MFYueYuan_Noncommercial-Regular', Helvetica, Arial, sans-serif
+    -webkit-font-smoothing antialiased
+    -moz-osx-font-smoothing grayscale
+    text-align center
+    color #2c3e50
 </style>
