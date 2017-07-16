@@ -8,7 +8,8 @@
       "nickname": "小心肝小肉球",
       "time": "07月06日 12:23",
       "wish": "我想和我妈去石家庄~皮皮虾大神帮我实现愿望吧~",
-      "praiseNum": 67
+      "praiseNum": 67,
+      "heartNum":false
     },
     {
       "id": "123123",
@@ -16,7 +17,8 @@
       "nickname": "小心肝小肉球",
       "time": "07月06日 12:23",
       "wish": "我想和我妈去石家庄~皮皮虾大神帮我实现愿望吧~我想和我妈去石家庄~皮皮虾大神帮我实现愿望吧~",
-      "praiseNum": 45
+      "praiseNum": 45,
+      "heartNum":false
     },
     {
       "id": "123123",
@@ -24,7 +26,8 @@
       "nickname": "小心肝小肉球",
       "time": "07月06日 12:23",
       "wish": "我想和我妈去石家庄~皮皮虾大神帮我实现愿望吧~我想和我妈去石家庄~皮皮虾大神帮我实现愿望吧~",
-      "praiseNum": 45
+      "praiseNum": 45,
+      "heartNum":false
     },
     {
       "id": "123123",
@@ -32,14 +35,16 @@
       "nickname": "小心肝小肉球",
       "time": "07月06日 12:23",
       "wish": "我想和我妈去石家庄~皮皮虾大神帮我实现愿望吧~我想和我妈去石家庄~皮皮虾大神帮我实现愿望吧~",
-      "praiseNum": 45
+      "praiseNum": 45,
+      "heartNum":false
     },{
       "id": "123123",
       "headUrl": "http://s4.sinaimg.cn/middle/7270bd0ft775120f5b533&690",
       "nickname": "小心肝小肉球",
       "time": "07月06日 12:23",
       "wish": "我想和我妈去石家庄~皮皮虾大神帮我实现愿望吧~我想和我妈去石家庄~皮皮虾大神帮我实现愿望吧~",
-      "praiseNum": 45
+      "praiseNum": 45,
+      "heartNum":false
     }
   ]
 }
