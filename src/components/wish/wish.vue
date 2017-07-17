@@ -2,6 +2,8 @@
 <style lang="stylus" scoped>
   @import '../../assets/styl/rem.styl'
   #wishList
+    overflow:-Scroll
+    overflow-y hidden
     width 100%
     height rem(1334)
     background-image url("背景2.png");
@@ -42,10 +44,11 @@
       margin-left rem(32)
       height rem(760)
       top rem(-20)
-      overflow auto
-
-      .lists
+      overflow hidden
+      .contWrapper
+        width 100%
         overflow hidden
+      .lists
         float left
         position
         margin-right rem(10)
@@ -155,7 +158,6 @@
       z-index: 100
       width 100%
       height 100%
-      overflow auto
       background rgba(7,17,27,0.8)
       top 0
       left 0
@@ -171,31 +173,33 @@
         .rulesText
           width rem(360)
           height rem(660)
-          overflow auto
-          .rulesTitle
-            font-size rem(30)
-            color #f8cb0c
-            padding-bottom rem(50)
-          .rulesList
-            padding-bottom rem(36)
-            text-align left
-            h3
+          overflow hidden
+          .textWrapper
+            width 100%
+            .rulesTitle
               font-size rem(30)
               color #f8cb0c
-            p
-              font-size rem(26)
-              color #fff
-            .rulesStar
-              font-size rem(26)
-              color #fff
-              padding-bottom rem(10)
-              &:before
-                content ""
-                width rem(24)
-                height rem(23)
-                display inline-block
-                background-image url("星.png")
-                background-size 100%
+              padding-bottom rem(50)
+            .rulesList
+              padding-bottom rem(36)
+              text-align left
+              h3
+                font-size rem(30)
+                color #f8cb0c
+              p
+                font-size rem(26)
+                color #fff
+              .rulesStar
+                font-size rem(26)
+                color #fff
+                padding-bottom rem(10)
+                &:before
+                  content ""
+                  width rem(24)
+                  height rem(23)
+                  display inline-block
+                  background-image url("星.png")
+                  background-size 100%
       .rulesClos
         display inline-block
         width rem(66)
@@ -215,56 +219,61 @@
         <h3>活动规则</h3>
       </div>
     </header>
-    <div class="content">
-      <ul v-for="(item, index) in wish" class="lists">
-        <!--<div class="rangKing">-->
+    <div class="content" ref="contWrapper">
+      <div class="contWrapper">
+        <ul v-for="(item, index) in wish" class="lists">
+          <!--<div class="rangKing">-->
           <!--<img src="./皇冠.png" alt="第一" class="gold">-->
           <!--<img src="./银冠.png" alt="第二" class="sliver">-->
-        <!--</div>-->
-        <li class="list" >
-          <div class="listHead">
-            <img :src='item.headUrl' alt="用户头像" class="wishImg">
-            <h3 class="wishName">{{item.nickname}}</h3>
-            <p class="wishTime">{{item.time}}</p>
-          </div>
-          <div class="listContainer">
-            {{item.wish}}
-          </div>
-          <div class="listFoot">
-            <div class="heartWrapper">
-              <span :class="item.heartNum?'heart':'heartShow'" @click="changeHeart(index)"></span>
-              <span class="heartNum">{{item.praiseNum}}</span></div>
-          </div>
-        </li>
-      </ul>
+          <!--</div>-->
+          <li class="list" >
+            <div class="listHead">
+              <img :src='item.headUrl' alt="用户头像" class="wishImg">
+              <h3 class="wishName">{{item.nickname}}</h3>
+              <p class="wishTime">{{item.time}}</p>
+            </div>
+            <div class="listContainer">
+              {{item.wish}}
+            </div>
+            <div class="listFoot">
+              <div class="heartWrapper">
+                <span :class="item.heartNum?'heart':'heartShow'" @click="changeHeart(index)"></span>
+                <span class="heartNum">{{item.praiseNum}}</span></div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
     </div>
     <footer>
       <Button type="primary" size="large" class="button" @click="pubWish"></Button>
     </footer>
-    <div v-show="rulesShow" class="wishRules">
-      <div class="rulesBox">
-        <div class="rulesText">
-          <div class="rulesTitle">活动规则</div>
-          <div class="rulesList">
-            <h3>1.活动时间</h3>
-            <p>2017.07.25 -- 2017.9.28</p>
-          </div>
-          <div class="rulesList">
-            <h3>2.参选条件</h3>
-            <p>下载皮皮虾旅行App,进行报名并收集好友祝福</p>
-          </div>
-          <div class="rulesList">
-            <h3>3.参选规则</h3>
-            <p class="rulesStar">点赞数排名第一，第二名，将获得机票+点赞数相应的积分数</p>
-            <p class="rulesStar">点赞数排名第3~22名，将获得。。。+点赞相应的积分数</p>
-            <p class="rulesStar">每位参与用户都将获得点赞数相应的积分数</p>
-            <p class="rulesStar">以上奖金都需要通过下载皮皮虾旅行app领取，积分将发送至报名手机号相应的皮皮虾旅行账户中</p>
-            <p class="rulesStar">请在活动截止后1个月内下载APP领取积分，逾期积分未领取，将视为放弃领取资格，积分失效~</p>
-          </div>
-          <div class="rulesList">
-            <h3>4.评选方式</h3>
-            <p>本场获得祝福最多用户票选</p>
-          </div>
+    <div v-show="rulesShow" class="wishRules" >
+      <div class="rulesBox" >
+        <div class="rulesText" ref="rulesText" >
+          <div class="textWrapper"  >
+              <div class="rulesTitle">活动规则</div>
+              <div class="rulesList">
+                <h3>1.活动时间</h3>
+                <p>2017.07.25 -- 2017.9.28</p>
+              </div>
+              <div class="rulesList">
+                <h3>2.参选条件</h3>
+                <p>下载皮皮虾旅行App,进行报名并收集好友祝福</p>
+              </div>
+              <div class="rulesList">
+                <h3>3.参选规则</h3>
+                <p class="rulesStar">点赞数排名第一，第二名，将获得机票+点赞数相应的积分数</p>
+                <p class="rulesStar">点赞数排名第3~22名，将获得。。。+点赞相应的积分数</p>
+                <p class="rulesStar">每位参与用户都将获得点赞数相应的积分数</p>
+                <p class="rulesStar">以上奖金都需要通过下载皮皮虾旅行app领取，积分将发送至报名手机号相应的皮皮虾旅行账户中</p>
+                <p class="rulesStar">请在活动截止后1个月内下载APP领取积分，逾期积分未领取，将视为放弃领取资格，积分失效~</p>
+              </div>
+              <div class="rulesList">
+                <h3>4.评选方式</h3>
+                <p>本场获得祝福最多用户票选</p>
+              </div>
+            </div>
         </div>
       </div>
       <span class="rulesClos" @click="hideRules"></span>
@@ -273,37 +282,57 @@
 </template>
 
 <script>
-export default {
-  props: {
-    wish: {
-      type: Array
-    }
-  },
-  data () {
-    return {
-      rulesShow: false
-    }
-  },
-  methods: {
-    changeHeart (index) {
-      this.wish[index].heartNum = !this.wish[index].heartNum
-      if (this.wish[index].heartNum) {
-        this.wish[index].praiseNum ++
-      } else if (!this.wish[index].heartNum) {
-        this.wish[index].praiseNum --
+  import BScroll from 'better-scroll'
+  import axios from 'axios'
+
+  const ERR_OK = 200
+
+  export default {
+    data () {
+      return {
+        wish: {},
+        rulesShow: false
       }
-      this.$set(this.wish)
     },
-    pubWish () {
-      alert('发表个屁啊!')
+    created () {
+      axios.get('/api/wish')
+        .then((response) => {
+          if (response.data.code === ERR_OK) {
+            this.wish = response.data.data
+            this.$nextTick(() => {
+              this._initScroll()
+            })
+          }
+          console.log(response, this.wish)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
-    showRules () {
-      this.rulesShow = true
-    },
-    hideRules () {
-      this.rulesShow = false
+    methods: {
+      _initScroll () {
+        this.rulesScroll = new BScroll(this.$refs.rulesText, {})
+        this.contScroll = new BScroll(this.$refs.contWrapper, {})
+      },
+      changeHeart (index) {
+        this.wish[index].heartNum = !this.wish[index].heartNum
+        if (this.wish[index].heartNum) {
+          this.wish[index].praiseNum ++
+        } else if (!this.wish[index].heartNum) {
+          this.wish[index].praiseNum --
+        }
+        this.$set(this.wish)
+      },
+      pubWish () {
+        alert('发表个屁啊!')
+      },
+      showRules () {
+        this.rulesShow = true
+      },
+      hideRules () {
+        this.rulesShow = false
+      }
     }
   }
-}
 </script>
 
