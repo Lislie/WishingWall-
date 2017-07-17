@@ -41,23 +41,52 @@
       margin-right rem(32)
       margin-left rem(32)
       height rem(760)
-      overflow hidden
-      .rangKing
-        position relative
-        top rem(40)
-        .gold
-          width rem(66)
-          height rem(62)
-        .sliver
-          width rem(66)
-          height rem(62)
-          float right
+      top rem(-20)
+      overflow auto
+
       .lists
         overflow hidden
         float left
+        position
         margin-right rem(10)
         &:nth-child(even)
           float right
+        &:nth-child(1)
+          position relative
+          &:before
+            content ""
+            display block
+            width rem(66)
+            height rem(62)
+            position absolute
+            background-image url("皇冠.png")
+            background-size 100%
+            left rem(60)
+        &:nth-child(2)
+          position relative
+          &:before
+            content ""
+            display block
+            width rem(66)
+            height rem(62)
+            position absolute
+            background-image url("银冠.png")
+            background-size 100%
+            left rem(60)
+        .rangKing:first-of-type
+          position absolute
+          width 100%
+          right rem(15)
+          top rem(240)
+          .gold
+            width rem(66)
+            height rem(62)
+            right rem(20)
+          .sliver
+            width rem(66)
+            height rem(62)
+            position absolute
+            right  0
         .list
           width rem(332)
           overflow  hidden
@@ -66,6 +95,7 @@
           box-sizing border-box
           background-color rgba(2,68,112,.8)
           padding 0 rem(20)
+
           .listHead
             text-align center
             padding-top rem(28)
@@ -77,6 +107,7 @@
             .wishName
               font-size rem(26)
             .wishTime
+              margin-top rem(10)
               font-style: rem(24)
           .listContainer
               margin-top rem(20)
@@ -154,11 +185,11 @@
       </div>
     </header>
     <div class="content">
-      <div class="rangKing">
-        <img src="./皇冠.png" alt="第一" class="gold">
-        <img src="./银冠.png" alt="第二" class="sliver">
-      </div>
       <ul v-for="(item, index) in wish" class="lists">
+        <!--<div class="rangKing">-->
+          <!--<img src="./皇冠.png" alt="第一" class="gold">-->
+          <!--<img src="./银冠.png" alt="第二" class="sliver">-->
+        <!--</div>-->
         <li class="list" >
           <div class="listHead">
             <img :src='item.headUrl' alt="用户头像" class="wishImg">
@@ -172,7 +203,6 @@
             <div class="heartWrapper">
               <span :class="item.heartNum?'heart':'heartShow'" @click="changeHeart(index)"></span>
               <span class="heartNum">{{item.praiseNum}}</span></div>
-
           </div>
         </li>
       </ul>
@@ -184,7 +214,7 @@
       <div class="rulesBox">
         <div class="rulesText"></div>
       </div>
-      <span class="rulesClos"></span>
+      <span class="rulesClos" @click="hideRules"></span>
     </div>
   </div>
 </template>
@@ -216,6 +246,9 @@ export default {
     },
     showRules () {
       this.rulesShow = true
+    },
+    hideRules () {
+      this.rulesShow = false
     }
   }
 }
