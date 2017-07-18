@@ -1,29 +1,36 @@
 <template>
   <div id="app">
-    <router-view :wish="wish"></router-view>
+    <Carousel v-model="value1">
+      <Carousel-item>
+        <div class="demo-carousel">1</div>
+      </Carousel-item>
+      <Carousel-item>
+        <page2></page2>
+      </Carousel-item>
+      <Carousel-item>
+        <Wish :wish="wish"></Wish>
+      </Carousel-item>
+      <Carousel-item>
+        <div class="demo-carousel">4</div>
+      </Carousel-item>
+    </Carousel>
   </div>
 </template>
 
 <script>
-
+  import Wish from './components/wish/wish.vue'
+//  import page2 from './components/page2/page2.vue'
   export default {
     data () {
       return {
-        wish: []
+        wish: [],
+        value1: 0
       }
+    },
+    components: {
+      Wish
+//      page2
     }
-//    created () {
-//      axios.get('/api/wish')
-//        .then((response) => {
-//          if (response.data.code === ERR_OK) {
-//            this.wish = response.data.data
-//          }
-//          console.log(response, this.wish)
-//        })
-//        .catch((err) => {
-//          console.log(err)
-//        })
-//    }
   }
 </script>
 

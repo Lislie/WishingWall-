@@ -3,10 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import iview from 'iview'
+import iView from 'iview'
+import 'vue2-animate/dist/vue2-animate.min.css'
+import '../src/assets/styl/common.css'
 
-Vue.use(iview)
-
+Vue.use(iView)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

@@ -28,7 +28,6 @@ var wish = appData.data
 var code = appData.code
 
 
-
 var apiRoutes = express.Router()
 
 apiRoutes.get('/wish',function (req, res) {
@@ -37,6 +36,11 @@ apiRoutes.get('/wish',function (req, res) {
     data:wish
   })
 })
+// apiRoutes.post('/api/v1/wish',function (req, res) {
+//   res.json({
+//
+//   })
+// })
 
 app.use('/api',apiRoutes);
 

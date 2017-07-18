@@ -248,7 +248,7 @@
     <footer>
       <Button type="primary" size="large" class="button" @click="pubWish"></Button>
     </footer>
-    <div v-show="rulesShow" class="wishRules" >
+    <div v-show="rulesShow" class="wishRules" name="Fade" >
       <div class="rulesBox" >
         <div class="rulesText" ref="rulesText" >
           <div class="textWrapper"  >
@@ -295,6 +295,7 @@
       }
     },
     created () {
+      // 设置一个开关来避免重负请求数据
       axios.get('/api/wish')
         .then((response) => {
           if (response.data.code === ERR_OK) {
@@ -303,13 +304,13 @@
               this._initScroll()
             })
           }
-          console.log(response, this.wish)
         })
         .catch((err) => {
           console.log(err)
         })
     },
     methods: {
+
       _initScroll () {
         this.rulesScroll = new BScroll(this.$refs.rulesText, {})
         this.contScroll = new BScroll(this.$refs.contWrapper, {})
