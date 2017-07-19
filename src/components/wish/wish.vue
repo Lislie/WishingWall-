@@ -7,7 +7,7 @@
     width 100%
     height rem(1334)
     background-image url("背景2.png");
-    header
+    .wishHeader
       width 100%
       height: rem(266)
       text-align center
@@ -23,20 +23,20 @@
         justify-content center /*水平居中*/
         background-image url("城堡.png")
         background-size 100%
-      h1
+        .listTitle
           font-size rem(50)
           line-height rem(50)
           margin-bottom rem(40)
           color white
       .rules
-        position absolute
-        top rem(36)
-        right rem(35)
+        position relative
+        top rem(-240)
+        left rem(280)
         overflow hidden
-        h3
+        .rulesH3
           font-size rem(30)
           color white
-        img
+        .rulesImg
           width rem(40)
     .content
       color #f8cb0c
@@ -98,7 +98,6 @@
           box-sizing border-box
           background-color rgba(2,68,112,.8)
           padding 0 rem(20)
-
           .listHead
             text-align center
             padding-top rem(28)
@@ -176,6 +175,7 @@
           overflow hidden
           .textWrapper
             width 100%
+            overflow hidden
             .rulesTitle
               font-size rem(30)
               color #f8cb0c
@@ -210,13 +210,13 @@
 </style>
 <template>
   <div id="wishList">
-    <header>
+    <header class="wishHeader">
       <div class="title">
         <h1 class="listTitle">心愿墙</h1>
       </div>
       <div class="rules" @click="showRules">
-        <img src="./活动规则.png" alt="活动规则">
-        <h3>活动规则</h3>
+        <img src="./活动规则.png" alt="活动规则" class="rulesImg">
+        <h3 class="rulesH3">活动规则</h3>
       </div>
     </header>
     <div class="content" ref="contWrapper">
@@ -319,8 +319,10 @@
         this.wish[index].heartNum = !this.wish[index].heartNum
         if (this.wish[index].heartNum) {
           this.wish[index].praiseNum ++
+          alert('aaa')
         } else if (!this.wish[index].heartNum) {
           this.wish[index].praiseNum --
+          alert('bbb')
         }
         this.$set(this.wish)
       },

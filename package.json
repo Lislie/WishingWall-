@@ -17,8 +17,10 @@
     "animate.css": "^3.5.2",
     "iview": "^2.0.0-rc.18",
     "jquery": "^3.2.1",
+    "moment": "^2.18.1",
     "vue": "^2.3.3",
     "vue-input-code": "^1.2.3",
+    "vue-mui": "^2.0.0",
     "vue-router": "^2.6.0",
     "vue2-animate": "^1.0.4"
   },

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>许愿墙</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <meta name="keywords" content="许愿墙">
+    <meta name="description" content="旅游看世界，你来许愿我来实现">
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/animate.css" />
+    <style>
+        body,html{
+            width: 100%;
+            height: 100%;
+        }
+        img{
+            display: block;
+        }
+        .page3{
+            width: 100%;
+            color: #f8cb0c;
+            text-align: center;
+            background: url("page3_bg.png") no-repeat center;
+            background-size: 100% 100%;
+            position: relative;
+            height: 667px;
+            overflow: hidden;
+        }
+        .page3 >p:first-child{
+            font-size: 23.5px;
+            margin-top: 61px;
+        }
+        .page3 >.brief,h1{
+            font-size: 15px;
+            padding: 0 60px;
+            text-align: left;
+            line-height: 23px;
+            z-index: 10;
+        }
+        .photo{
+            width: 152.5px;
+            height: 199.5px;
+            background: url("page3_box.png") no-repeat center;
+            background-size: 100% 100%;
+            margin: 0 auto;
+            margin-top: 27px;
+            position: relative;
+            overflow: hidden;
+        }
+        .photo > img{
+            width: 87%;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+        }
+        .flipY{
+            animation: flipY 3s ease-in-out;
+        }
+        .carpet{
+            width: 354.5px;
+            height: 75px;
+            margin: 0 auto;
+            /*margin-top: 10px;*/
+            overflow:hidden;
+            position: relative;
+        }
+        .carpet img:nth-child(1){
+            position: absolute;
+            width: 100%;
+            top: 10px;
+            left: 0;
+            z-index: 1;
+            animation: carpet 1.5s linear infinite;
+            animation-direction:alternate;
+        }
+        .carpet img:nth-child(2){
+            width:66%;
+            height:auto;
+            left: 17%;
+            top:28px;
+            z-index: 5;
+            position: absolute;
+        }
+        h1{
+            font-weight: normal;
+            margin-top: 26.5px;
+        }
+        .bottom{
+            width: 70%;
+            height: 29.5%;
+            position: absolute;
+            bottom: 0;
+            left: 15%;
+            background: url("page3_bottom.png") no-repeat center;
+            background-size: 100% 100%;
+            z-index: 0;
+        }
+        @-webkit-keyframes carpet{
+            0%{transform: translate3d(0,0px,0)}
+            100%{transform: translate3d(0px,10px,0)}
+
+        }
+        @keyframes  carpet{
+            0%{transform: translate3d(0,0px,0)}
+            100%{transform: translate3d(0px,10px,0)}
+
+        }
+        @-webkit-keyframes flipY{
+            from{-webkit-transform: perspective(400px) rotate3d(0, 1, 0, 0deg);
+                transform: perspective(400px) rotate3d(0, 1, 0, 0deg);}
+            to{
+                -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 3600deg);
+                transform: perspective(400px) rotate3d(0, 1, 0, 3600deg);
+            }
+        }
+        @keyframes flipY {
+            from{-webkit-transform: perspective(400px) rotate3d(0, 1, 0, 0deg);
+                transform: perspective(400px) rotate3d(0, 1, 0, 0deg);}
+            to{
+                -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 3600deg);
+                transform: perspective(400px) rotate3d(0, 1, 0, 3600deg);
+            }
+        }
+
+        @-webkit-keyframes bounce_Out {
+
+            from {
+                opacity: 0;
+                -webkit-transform: scale3d(.3, .3, .3);
+                transform: scale3d(.3, .3, .3);
+
+            }
+
+            to {
+                opacity: 1;
+                -webkit-transform: scale3d(1.0, 1.0, 1.0);
+                transform: scale3d(1.0, 1.0, 1.0);
+            }
+        }
+
+        @keyframes bounce_Out {
+            from {
+                opacity: 0;
+                -webkit-transform: scale3d(.3, .3, .3);
+                transform: scale3d(.3, .3, .3);
+
+            }
+
+            to {
+                opacity: 1;
+                -webkit-transform: scale3d(1.0, 1.0, 1.0);
+                transform: scale3d(1.0, 1.0, 1.0);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page3">
+    <p>国际知名行程规划师<br />为您量身定制行程</p>
+    <div class="photo">
+    <img id="photo" src="page3_photo.png">
+    </div>
+    <div class="carpet">
+        <img id="carpetImg" src="page3_carpet.png" />
+     <img src="page3_shadow.png" />
+    </div>
+    <h1>薛峰</h1>
+    <p class="brief">旅日十年，资深背包客，旅游定制专家，PADI的潜水教练、滑雪教练，想来段不一样的旅行吗？快来许愿吧！</p>
+    <div class="bottom"></div>
+</div>
+
+</body>
+<script>
+    window.onload=function(){
+        var carpet = document.getElementById('carpetImg');
+        var photo = document.getElementById('photo');
+        photo.classList.add('flipY');
+        /*setTimeout(function(){
+            carpet.style.display = 'block';
+            carpet.classList.add('carpetIn');
+        },2500);*/
+       /* setTimeout(function(){
+            carpet.setAttribute('class','carpetstate');
+        },3400);*/
+
+    }
+</script>
+</html>

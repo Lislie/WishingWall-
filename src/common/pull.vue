@@ -20,8 +20,8 @@
         </section>
     </div>
 </template>
-<style lang="styl">
-    @import url("../../assets/styl/pull-refresh.styl");
+<style lang="stylus" scoped>
+    @import url("./pull.styl");
 </style>
 <script>
     export default {
@@ -53,7 +53,7 @@
                 require: false
             }
         },
-        data() {
+        data () {
             return {
                 top: 0,
                 state: 0,
@@ -61,54 +61,54 @@
                 startY: 0,
                 touching: false,
                 infiniteLoading: false,
-                downFlag: false, //用来显示是否加载中
+                downFlag: false, // 用来显示是否加载中
             }
         },
         methods: {
-            touchStart(e) {
-                this.startY = e.targetTouches[0].pageY;
-                this.startX = e.targetTouches[0].pageX;
-                this.startScroll = this.$el.scrollTop || 0;
+            touchStart (e) {
+                this.startY = e.targetTouches[0].pageY
+                this.startX = e.targetTouches[0].pageX
+                this.startScroll = this.$el.scrollTop || 0
                 this.touching = true; //留着有用，不能删除
 
-                this.dataList.noFlag = false;
-                this.$el.querySelector('.load-more').style.display = 'block';
+                this.dataList.noFlag = false
+                this.$refs.querySelector('.load-more').style.display = 'block'
             },
-            touchMove(e) {
-                if(!this.enableRefresh || this.dataList.noFlag || !this.touching) {
+            touchMove (e) {
+                if (!this.enableRefresh || this.dataList.noFlag || !this.touching) {
                     return
                 }
                 let diff = e.targetTouches[0].pageY - this.startY - this.startScroll
-                if(diff > 0) e.preventDefault()
+                if (diff > 0) e.preventDefault()
                 this.top = Math.pow(diff, 0.8) + (this.state === 2 ? this.offset : 0)
-                if(this.state === 2) { // in refreshing
+                if (this.state === 2) { // in refreshing
                     return
                 }
-                if(this.top >= this.offset) {
+                if (this.top >= this.offset) {
                     this.state = 1
                 } else {
                     this.state = 0
                 }
 
-                let more = this.$el.querySelector('.load-more');
-                if(!this.top && this.state === 0) {
+                let more = this.$refs.querySelector('.load-more');
+                if (!this.top && this.state === 0) {
                     more.style.display = 'block';
                 } else {
                     more.style.display = 'none';
                 }
             },
-            touchEnd(e) {
+            touchEnd (e) {
 
-                if(!this.enableRefresh) {
+                if (!this.enableRefresh) {
                     return
                 }
                 this.touching = false
-                if(this.state === 2) { // in refreshing
+                if (this.state === 2) { // in refreshing
                     this.state = 2
                     this.top = this.offset
                     return
                 }
-                if(this.top >= this.offset) { // do refresh
+                if (this.top >= this.offset) { // do refresh
                     this.refresh()
                 } else { // cancel refresh
                     this.state = 0
@@ -122,47 +122,47 @@
                     dx = endX - this.startX;
 
                 //如果滑动距离太短
-                if(Math.abs(dx) < 2 && Math.abs(dy) < 2) {
+                if (Math.abs(dx) < 2 && Math.abs(dy) < 2) {
                     console.log("滑动距离太短")
                     return;
                 }
 
                 //--------end--------
 
-                if(!this.enableInfinite || this.infiniteLoading) {
+                if (!this.enableInfinite || this.infiniteLoading) {
                     return
                 }
 
-                let outerHeight = this.$el.clientHeight,
-                    innerHeight = this.$el.querySelector('.inner').clientHeight,
-                    scrollTop = this.$el.scrollTop,
+                let outerHeight = this.$refs.clientHeight,
+                    innerHeight = this.$refs.querySelector('.inner').clientHeight,
+                    scrollTop = this.$refs.scrollTop,
                     ptrHeight = this.onRefresh ? this.$el.querySelector('.pull-refresh').clientHeight : 0,
                     bottom = innerHeight - outerHeight - scrollTop - ptrHeight;
 
                 console.log(bottom + " __ " + this.offset)
 
-                if(bottom <= this.offset && this.state === 0) {
+                if (bottom <= this.offset && this.state === 0) {
                     this.downFlag = true;
                     this.infinite();
                 } else {
-                    this.$el.querySelector('.load-more').style.display = 'none';
+                    this.$refs.querySelector('.load-more').style.display = 'none';
                     this.downFlag = false;
                 }
 
             },
-            refresh() {
+            refresh () {
                 this.state = 2;
                 this.top = this.offset;
                 setTimeout(() => {
                     this.onRefresh(this.refreshDone)
                 }, 1000);
             },
-            refreshDone() {
+            refreshDone () {
                 this.state = 0
                 this.top = 0
             },
 
-            infinite() {
+            infinite () {
                 this.infiniteLoading = true
 
                 setTimeout(() => {
@@ -170,7 +170,7 @@
                 }, 2000);
             },
 
-            infiniteDone() {
+            infiniteDone () {
                 this.infiniteLoading = false
             }
         }
