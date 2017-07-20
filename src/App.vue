@@ -1,23 +1,10 @@
 <template>
   <div id="app">
-    <page1></page1>
-    <page2></page2>
-    <page3></page3>
-    <Wish :wish="wish"></Wish>
-    <page4></page4>
-    <page5></page5>
-    <page6></page6>
+      <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import Wish from './components/wish/wish.vue'
-  import page1 from './components/page1/page1.vue'
-  import page2 from './components/page2/page2.vue'
-  import page3 from './components/page3/page3.vue'
-  import page5 from './components/page5/page5.vue'
-  import page4 from './components/page4/page4.vue'
-  import page6 from './components/page6/page6.vue'
   import Vue from 'vue'
   import moment from 'moment'
 
@@ -31,15 +18,6 @@
         wish: [],
         value1: 0
       }
-    },
-    components: {
-      Wish,
-      page1,
-      page2,
-      page5,
-      page4,
-      page6,
-      page3
     }
   }
 </script>

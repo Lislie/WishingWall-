@@ -172,9 +172,10 @@
         .rulesText
           width rem(360)
           height rem(660)
-          overflow hidden
+          overflow auto
           .textWrapper
             width 100%
+            height 150%
             overflow hidden
             .rulesTitle
               font-size rem(30)
@@ -249,9 +250,9 @@
       <Button type="primary" size="large" class="button" @click="pubWish"></Button>
     </footer>
     <div v-show="rulesShow" class="wishRules" name="Fade" >
-      <div class="rulesBox" >
+      <div class="rulesBox">
         <div class="rulesText" ref="rulesText" >
-          <div class="textWrapper"  >
+          <div class="textWrapper">
               <div class="rulesTitle">活动规则</div>
               <div class="rulesList">
                 <h3>1.活动时间</h3>
@@ -290,8 +291,10 @@
   export default {
     data () {
       return {
-        wish: {},
-        rulesShow: false
+        lists: [],
+        rulesShow: false,
+        CurrentPageIndex: 1,
+        PageSize: 10
       }
     },
     created () {
@@ -300,6 +303,22 @@
         .then((response) => {
           if (response.data.code === ERR_OK) {
             this.wish = response.data.data
+            if (this.CurrentPageIndex === 1) {
+              this.lists = []
+              for (let i = 0; i < this.wish.length; i++) {
+                if (this.wish[i]) {
+                  this.lists.push(this.wish[i])
+                }
+                console.log(this.lists)
+              }
+            } else {
+              for (let i = 0; i < this.wish.length; i++) {
+                if (this.wish[i]) {
+                  this.lists.push(this.wish[i])
+                }
+              }
+            }
+            this.CurrentPageIndex += 1 // 页面+1
             this.$nextTick(() => {
               this._initScroll()
             })
@@ -309,11 +328,24 @@
           console.log(err)
         })
     },
+    mounted () {
+      this.$nextTick(() => {
+        this._initScroll()
+      })
+    },
     methods: {
 
       _initScroll () {
-        this.rulesScroll = new BScroll(this.$refs.rulesText, {})
-        this.contScroll = new BScroll(this.$refs.contWrapper, {})
+        this.rulesScroll = new BScroll(this.$refs.rulesText, {
+          hasVerticalScroll: true,
+          click: true,
+          bounce: true
+        })
+        this.contScroll = new BScroll(this.$refs.contWrapper, {
+          hasVerticalScroll: true,
+          click: true,
+          bounce: true
+        })
       },
       changeHeart (index) {
         this.wish[index].heartNum = !this.wish[index].heartNum
@@ -327,7 +359,7 @@
         this.$set(this.wish)
       },
       pubWish () {
-        alert('发表个屁啊!')
+        this.$router.push({path: '/pubWish'})
       },
       showRules () {
         this.rulesShow = true

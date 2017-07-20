@@ -2,7 +2,7 @@
   @import '../../assets/styl/rem.styl'
   .page6
     width 100%
-    height rem(1334)
+    height 100%
     background-image url("背景3.png")
     background-size 100%
     .headpage6
@@ -53,6 +53,7 @@
             margin-top rem(10)
             font-style: rem(24)
         .listContainer
+          color #f8cb0c
           margin-top rem(20)
           font-size rem(28)
       .page6Heart
@@ -126,7 +127,7 @@
     <footer class="footpage6">
       <div class="btnpage6">
         <button class="btnLeft" @click="invite">邀请小伙伴帮我点赞</button>
-        <button class="btnRight">返回首页</button>
+        <button class="btnRight" @click="toIndex">返回首页</button>
       </div>
       <div class="page6ma">
         <p>扫描二维码，下载皮皮虾旅行哦</p>
@@ -162,7 +163,12 @@
         })
     },
     methods: {
-
+      invite () {
+        this.$router.push({path: '/share'})
+      },
+      toIndex () {
+        this.$router.push({path: '/'})
+      }
     }
   }
 
