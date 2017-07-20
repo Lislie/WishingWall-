@@ -16,38 +16,70 @@
   .list-enter-active {
     transition: all 1s ease
     transform: translateY(0)
+    background-image url("./assets/img/背景1.png")
+    background-size 100%
     opacity 1
   }
 
   .list-leave-active {
-    transition: all 2s ease
+    transition: all .8s ease
     transform: translateY(-100%)
+    background-image url("./assets/img/背景1.png")
+    background-size 100%
     opacity 0
   }
 
   .list-enter {
     transform: translateY(100%)
+    background-image url("./assets/img/背景1.png")
+    background-size 100%
     opacity 1
   }
-
   .list-leave {
     transform: translateY(0)
+    background-image url("./assets/img/背景1.png")
+    background-size 100%
     opacity 0
+  }
+  .downBtn {
+    width: 1.46rem
+    height: 0.75rem
+    position: absolute
+    left: 50%
+    bottom: 0.01rem
+    margin-left: -0.73rem
+    background: url("./assets/img/down.png") no-repeat center;
+    background-size: 100% 100%
+    z-index: 99
+    animation: fadeInUp 2s ease 0s infinite
+  }
+  .upBtn {
+    width: 1.46rem
+    height: 0.75rem
+    position: absolute
+    transform rotate(180deg)
+    left: 50%
+    top: 0.01rem
+    margin-left: -0.73rem
+    background: url("./assets/img/up.png") no-repeat center;
+    background-size: 100% 100%
+    z-index: 99
+    animation: fadeInUp 2s ease 0s infinite
+
   }
 </style>
 
 <template>
   <div id="wrapper">
-    <button @click="last" class="last">上一页</button>
+    <button @click="last" class="upBtn"></button>
+    <button @click="next" class="downBtn"></button>
     <transition name='list' mode="out-in">
       <componet :is="view"></componet>
     </transition>
-    <button @click="next" class="next">下一页</button>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import $ from 'jquery'
   import Wish from './components/wish/wish.vue'
   import page1 from './components/page1/page1.vue'
   import page2 from './components/page2/page2.vue'

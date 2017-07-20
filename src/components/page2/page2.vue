@@ -139,7 +139,6 @@
     methods: {
       animate2 () {
         let ps = document.getElementsByClassName('cloud1')
-        console.log(ps)
         for (let i = 0; i < ps.length; i++) {
           setTimeout(function () {
             ps[i].style.display = 'block'

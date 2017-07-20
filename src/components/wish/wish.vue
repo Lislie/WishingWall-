@@ -221,8 +221,8 @@
       </div>
     </header>
     <div class="content" ref="contWrapper">
-      <div class="contWrapper">
-        <ul v-for="(item, index) in wish" class="lists">
+      <div class="contWrapper" ref="scroll">
+        <ul v-for="(item, index) in lists" class="lists">
           <!--<div class="rangKing">-->
           <!--<img src="./皇冠.png" alt="第一" class="gold">-->
           <!--<img src="./银冠.png" alt="第二" class="sliver">-->
@@ -231,7 +231,7 @@
             <div class="listHead">
               <img :src='item.headUrl' alt="用户头像" class="wishImg">
               <h3 class="wishName">{{item.nickname}}</h3>
-              <p class="wishTime">{{item.time}}</p>
+              <p class="wishTime">{{item.time | moment}}</p>
             </div>
             <div class="listContainer">
               {{item.wish}}
@@ -285,8 +285,12 @@
 <script>
   import BScroll from 'better-scroll'
   import axios from 'axios'
+  import Scroll from '../pull/pull-refresh.vue'
 
   const ERR_OK = 200
+
+  let conWrapper = document.querySelector('.contWrapper')
+  let content = document.querySelector('.content')
 
   export default {
     data () {
@@ -294,25 +298,25 @@
         lists: [],
         rulesShow: false,
         CurrentPageIndex: 1,
-        PageSize: 10
+        PageSize: 6
       }
     },
     created () {
       // 设置一个开关来避免重负请求数据
-      axios.get('/api/wish')
+      axios.get('http://101.251.240.134:8080/wish/api/v1/wish')
         .then((response) => {
           if (response.data.code === ERR_OK) {
             this.wish = response.data.data
             if (this.CurrentPageIndex === 1) {
               this.lists = []
-              for (let i = 0; i < this.wish.length; i++) {
+              for (let i = 0; i < this.PageSize; i++) {
                 if (this.wish[i]) {
                   this.lists.push(this.wish[i])
                 }
                 console.log(this.lists)
               }
             } else {
-              for (let i = 0; i < this.wish.length; i++) {
+              for (let i = 0; i < this.PageSize; i++) {
                 if (this.wish[i]) {
                   this.lists.push(this.wish[i])
                 }
@@ -329,9 +333,7 @@
         })
     },
     mounted () {
-      this.$nextTick(() => {
-        this._initScroll()
-      })
+
     },
     methods: {
 
@@ -366,7 +368,18 @@
       },
       hideRules () {
         this.rulesShow = false
+      },
+      down () {
+        this.$refs.scroll.addEventListener({
+          name: 'scrolltobottom',
+          extra: {
+            threshold: 0 // 设置距离底部多少距离时触发，默认为0
+          }
+        })
       }
+    },
+    compoents: {
+      'v-scroll': Scroll
     }
   }
 </script>
