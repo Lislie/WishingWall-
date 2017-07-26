@@ -2,7 +2,7 @@
   @import '../../assets/styl/rem.styl'
   .page4
     width 100%
-    height rem(1334)
+    height 100%
     background-image url("背景3.png")
     background-size 100%
     .headpage4
@@ -156,7 +156,8 @@
         return {
           wish: {},
           page4Show: false,
-          id:''
+          id:'',
+          userId:''
         }
       },
       created () {
@@ -183,6 +184,7 @@
           })*/
       },
       mounted () {
+
 //          var link = '/invite
       },
       methods: {
@@ -194,6 +196,28 @@
         },
         hideRules () {
           this.page4Show = false
+        },
+        is_weixin(){
+          let ua = navigator.userAgent.toLowerCase();
+          if(ua.match(/MicroMessenger/i)=="micromessenger") {
+            this.weixinStatus = true;
+            let code = this.GetQueryString('code')
+            if(code!=null && code!=undefined){
+              IndexService.getuserinfo(code)
+                .then((recvdata)=>{
+                  if(recvdata.code==200){
+                    this.nickName = recvdata.data.nickName
+                    this.headImgUrl = recvdata.data.headImgUrl
+                    this.userId = recvdata.data.openId
+                  }
+                })
+            }else{
+              var link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx49b89597e8b4f7a8"+"&redirect_uri="+window.location.href +"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+              window.location.href = link;
+            }
+          } else {
+            this.weixinStatus = false;
+          }
         },
       }
     }

@@ -5,7 +5,7 @@
     background: url("./page2_bg.png") no-repeat center;
     background-size: 100% 100%;
     text-align: center;
-    height: rem(1334);
+    height 100%;
     overflow: hidden;
     position: relative;
   }

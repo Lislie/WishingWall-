@@ -147,7 +147,8 @@
       return {
         wish: {},
         rulesShow: false,
-        id:''
+        id:'',
+        userId:''
       }
     },
     created () {

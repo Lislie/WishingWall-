@@ -2,7 +2,7 @@
   @import '../../assets/styl/rem.styl'
   .page3{
     width: 100%;
-    height: rem(1334)
+    height 100%;
     color: #f8cb0c;
     text-align: center;
     background: url("page3_bg.png") no-repeat center;
@@ -50,9 +50,9 @@
         top: rem(20);
         left: 0;
         z-index: 1;
-       
+
       }
-     
+
       img:nth-child(2){
         width:66%;
         height:auto;
@@ -62,7 +62,7 @@
         position: absolute;
       }
     }
-    
+
     h1{
       font-weight: normal;
       margin-top: rem(53);

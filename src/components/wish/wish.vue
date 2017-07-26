@@ -159,61 +159,61 @@
         border none
 
 
-  .wishRules
-    position absolute
-    z-index: 999
-    width 100%
-    height 100%
-    background rgba(7,17,27,0.8)
-    top 0
-    left 0
-    .rulesBox
-      width rem(624)
-      height rem(894)
-      margin rem(114) rem(64) 0
-      background-image url("./飞毯.png")
-      background-size 100%
-      display flex
-      align-items center /*垂直居中*/
-      justify-content center /*水平居中*/
-      .rulesText
-        width rem(360)
-        height rem(660)
-        overflow auto
-        .textWrapper
-          width 100%
-          overflow hidden
-          .rulesTitle
-            font-size rem(30)
-            color #f8cb0c
-            padding-bottom rem(50)
-          .rulesList
-            padding-bottom rem(36)
-            text-align left
-            h3
+    .wishRules
+      position absolute
+      z-index: 999
+      width 100%
+      height 100%
+      background rgba(7,17,27,0.8)
+      top 0
+      left 0
+      .rulesBox
+        width rem(624)
+        height rem(894)
+        margin rem(114) rem(64) 0
+        background-image url("./飞毯.png")
+        background-size 100%
+        display flex
+        align-items center /*垂直居中*/
+        justify-content center /*水平居中*/
+        .rulesText
+          width rem(360)
+          height rem(660)
+          overflow auto
+          .textWrapper
+            width 100%
+            overflow hidden
+            .rulesTitle
               font-size rem(30)
               color #f8cb0c
-            p
-              font-size rem(26)
-              color #fff
-            .rulesStar
-              font-size rem(26)
-              color #fff
-              padding-bottom rem(10)
-              &:before
-                content ""
-                width rem(24)
-                height rem(23)
-                display inline-block
-                background-image url("星.png")
-                background-size 100%
-    .rulesClos
-      display inline-block
-      width rem(66)
-      height rem(66)
-      background-image url("./关闭-6.png")
-      background-size 100%
-      margin-top rem(8)
+              padding-bottom rem(50)
+            .rulesList
+              padding-bottom rem(36)
+              text-align left
+              h3
+                font-size rem(30)
+                color #f8cb0c
+              p
+                font-size rem(26)
+                color #fff
+              .rulesStar
+                font-size rem(26)
+                color #fff
+                padding-bottom rem(10)
+                &:before
+                  content ""
+                  width rem(24)
+                  height rem(23)
+                  display inline-block
+                  background-image url("星.png")
+                  background-size 100%
+      .rulesClos
+        display inline-block
+        width rem(66)
+        height rem(66)
+        background-image url("./关闭-6.png")
+        background-size 100%
+        margin-top rem(8)
 
 
 </style>
@@ -357,12 +357,38 @@
         weixinStatus:false,
         nickName:'',
         headUrl:'',
-        loading_show:false
+        loading_show:false,
+        userId:''
       }
     },
     created () {
       this.loadData()
       this.is_weixin()
+      wx.onMenuShareTimeline({
+        title: '皮皮虾旅行倾情奉献，知名规划师定制路线，并赠送机票！快来许愿', // 分享标题
+        link: 'http://101.251.240.134:8080', // 分享链接，该链接域名必须与当前企业的可信域名一致
+        imgUrl: 'http://img.ppx.easyto.com/images/wish/page6/第九页二维码.png', // 分享图标
+        success: function () {
+          // 用户确认分享后执行的回调函数
+        },
+        cancel: function () {
+          // 用户取消分享后执行的回调函数
+        }
+      });
+      wx.onMenuShareAppMessage({
+        title:'皮皮虾旅行倾情奉献，知名规划师定制路线，并赠送机票！快来许愿', // 分享标题
+        desc: '', // 分享描述
+        link: 'http://101.251.240.134:8080/', // 分享链接，该链接域名必须与当前企业的可信域名一致
+        imgUrl: 'http://img.ppx.easyto.com/images/wish/page6/第九页二维码.png', // 分享图标
+        type: '', // 分享类型,music、video或link，不填默认为link
+        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+        success: function () {
+          // 用户确认分享后执行的回调函数
+        },
+        cancel: function () {
+          // 用户取消分享后执行的回调函数
+        }
+      });
     },
     methods: {
       stopPropagation(event){
@@ -453,17 +479,23 @@
             console.log(err)
           })},
       is_weixin(){
-        var ua = navigator.userAgent.toLowerCase();
+        let ua = navigator.userAgent.toLowerCase();
         if(ua.match(/MicroMessenger/i)=="micromessenger") {
           this.weixinStatus = true;
           let code = this.GetQueryString('code')
-          IndexService.getuserinfo(code)
-            .then((recvdata)=>{
-              if(recvdata.code==200){
-                this.nickName = recvdata.data.nickName
-                this.headUrl = recvdata.data.headImgUrl
-              }
-            })
+          if(code!=null && code!=undefined){
+            IndexService.getuserinfo(code)
+              .then((recvdata)=>{
+                if(recvdata.code==200){
+                  this.nickName = recvdata.data.nickName
+                  this.headImgUrl = recvdata.data.headImgUrl
+                  this.userId = recvdata.data.openId
+                }
+              })
+          }else{
+            var link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx49b89597e8b4f7a8"+"&redirect_uri="+window.location.href +"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+            window.location.href = link;
+          }
         } else {
           this.weixinStatus = false;
         }
@@ -499,6 +531,20 @@
             })
         } else if (!this.lists[index].heartNum) {
           this.lists[index].praiseNum --
+          if(this.weixinStatus){
+            data={
+              id:this.lists[index].id,
+              channel:2,
+              headUrl:this.headUrl,
+              nickName:this.nickName,
+            }
+          }else{
+            data={
+              id:this.lists[index].id,
+              userId:this.GetQueryString('userId'),
+              channel:1,
+            }
+          }
           IndexService.praise(data)
             .then((recvdata)=>{
 
@@ -531,4 +577,3 @@
     }
   }
 </script>
-

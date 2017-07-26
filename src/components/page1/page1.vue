@@ -1,6 +1,6 @@
 <template>
   <div class="page1">
-    <img src="./logo_ppx.png" />
+    <img src="./logo_ppx.png" class="logo"/>
     <div class="imgs">
       <img id="lamp" src="./page1_lamp.png" />
       <img id="alading" src="./alading.png" />
@@ -22,7 +22,7 @@
 
       }
     },
-    mounted () {
+    created () {
       this.init()
     },
     methods: {
@@ -90,7 +90,7 @@
     background: url("./page1_bg.png") no-repeat center
     background-size: 100% 100%
     text-align: center
-    height: rem(1334)
+    height 100%
     overflow: hidden
     position: relative
   }
@@ -98,11 +98,11 @@
     margin-top: rem(757)
     position: relative
   }
-  .page1 > img{
+  .logo{
     width: rem(130)
     height: rem(116)
     margin-top: rem(30)
-    margin-left: rem(37)
+    margin-right: rem(500)
   }
   .page1 >div:nth-child(2) >img:nth-child(1){
     width: rem(104)

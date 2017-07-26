@@ -158,7 +158,7 @@
         weixinStatus:false,
         nickName:'',
         headImgUrl:'',
-        userid:''
+        userId:''
       }
     },
     mounted () {
@@ -199,20 +199,26 @@
         });
        },
       is_weixin(){
-          let ua = navigator.userAgent.toLowerCase();
-          if(ua.match(/MicroMessenger/i)=="micromessenger") {
-             this.weixinStatus = true;
-             let code = this.GetQueryString('code')
-              IndexService.getuserinfo(code)
+        let ua = navigator.userAgent.toLowerCase();
+        if(ua.match(/MicroMessenger/i)=="micromessenger") {
+          this.weixinStatus = true;
+          let code = this.GetQueryString('code')
+          if(code!=null && code!=undefined){
+            IndexService.getuserinfo(code)
               .then((recvdata)=>{
-                  if(recvdata.code==200){
-                    this.nickName = recvdata.data.nickName
-                    this.headImgUrl = recvdata.data.headImgUrl
-                  }
+                if(recvdata.code==200){
+                  this.nickName = recvdata.data.nickName
+                  this.headImgUrl = recvdata.data.headImgUrl
+                  this.userId = recvdata.data.openId
+                }
               })
-          } else {
-              this.weixinStatus = false;
+          }else{
+            var link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx49b89597e8b4f7a8"+"&redirect_uri="+window.location.href +"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+            window.location.href = link;
           }
+        } else {
+          this.weixinStatus = false;
+        }
       },
       GetQueryString(name){
         let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -285,7 +291,7 @@
                 nickName:this.nickName,
                 headUrl:this.headImgUrl,
                 channel:'2',
-                userId:'oHSNYwK0DNBLRf6ts3qbzzedILDQ'
+                userId:this.openId
 
               }
               console.log('weixin')
