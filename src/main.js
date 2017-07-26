@@ -3,15 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import iView from 'iview'
 import 'vue2-animate/dist/vue2-animate.min.css'
 import '../src/assets/styl/common.css'
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
 
-// import MintUI from 'mint-ui'
-// import 'mint-ui/lib/style.css'
-
-Vue.use(iView)
-// Vue.use(MintUI)
+Vue.use(MintUI)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

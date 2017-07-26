@@ -162,18 +162,19 @@
       }
     },
     mounted () {
-      let qr = this.GetQueryString("code");
-      if( qr!=null && qr!=undefined){
-        this.getName(qr);
-      }else{
-        let link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx21744c1d2e6c62fe" +
-          "&redirect_uri="+window.location.href +
-          "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
-        console.log(link)
-        window.location.href = link;
-      }
+
     },
     created () {
+//      let qr = this.GetQueryString("code");
+//      if( qr!=null && qr!=undefined){
+//        this.getName(qr);
+//      }else{
+//        let link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx49b89597e8b4f7a8" +
+//          "&redirect_uri="+window.location.href +
+//          "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+//        console.log(link)
+//        window.location.href = link;
+//      }
 
         this.is_weixin()
 
@@ -192,6 +193,7 @@
               alert(data);
               this.headImgUrl = data.data.headImgUrl;
               this.nickName = data.data.nickName;
+              this.userId = data.data.openId;
             }
           }
         });
@@ -274,6 +276,7 @@
         }
         IndexService.checkNum(data)
         .then((recvdata)=>{
+      	   console.log(recvdata)
           if(recvdata.code==200){
             if(this.weixinStatus){
               let datasave = {
@@ -281,33 +284,39 @@
                 mobile:'86,'+this.phoneText,
                 nickName:this.nickName,
                 headUrl:this.headImgUrl,
-                channel:'2'
+                channel:'2',
+                userId:'oHSNYwK0DNBLRf6ts3qbzzedILDQ'
+
               }
               console.log('weixin')
               IndexService.sendWish(datasave)
               .then((recvdataweixin)=>{
-                if(recvdataweixin.code==200){
+                if(recvdataweixin.code == 200){
                   this.$router.push({path: '/postWish/'+recvdataweixin.data.wid})
-                }else{
-                  tost.innerText=recvdataweixin.msg;
-                  tost.style.opacity = 1;
-                  tost.style.left = "50%";
-                  this.timerLeave();
-                }
+                }else if(recvdataweixin.code == 405) {
+                  this.$router.push({path: '/already/'+recvdataweixin.data.wid})
+                }else {
+                    tost.innerText=recvdataweixin.msg;
+                    tost.style.opacity = 1;
+                    tost.style.left = "50%";
+                    this.timerLeave();
+                  }
               })
             }else{
               console.log('ppx')
                 let datasave = {
-                  userId:this.userid,
+                  userId:'ev2gagbvibnkamhjoxdnjf',
                   wish:this.wishText,
                   mobile:'86,'+this.phoneText,
-                  channel:'1'
+                  channel:'1',
                 }
               IndexService.sendWish(datasave)
               .then((recvdatapppx)=>{
-                if(recvdatapppx.code==200){
+                if(recvdatapppx.code == 200){
                   this.$router.push({path: '/postWish/'+recvdatapppx.data.wid})
-                }else{
+                } else if(recvdatapppx.code == 405) {
+                  this.$router.push({path: '/already/' + recvdatapppx.data.wid})
+                } else {
                     tost.innerText=recvdatapppx.msg;
                     tost.style.opacity = 1;
                     tost.style.left = "50%";

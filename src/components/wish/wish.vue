@@ -3,8 +3,7 @@
   @import '../../assets/styl/rem.styl'
 
   #wishList
-    overflow:-Scroll
-    overflow-y hidden
+    overflow:hidden
     width 100%
     height rem(1334)
     background-image url("背景2.png");
@@ -54,6 +53,7 @@
       .lists
         float left
         position
+
         margin-right rem(10)
         &:nth-child(even)
           float right
@@ -95,6 +95,7 @@
             right  0
         .list
           width rem(332)
+          height rem(472)
           overflow  hidden
           margin-bottom rem(20)
           border-radius rem(20)
@@ -115,41 +116,40 @@
               margin-top rem(10)
               font-style: rem(24)
           .listContainer
-              margin-top rem(20)
-            font-size rem(28)
+            margin-top rem(20)
+            display:block;
+            overflow:hidden;
+            text-align left
+            text-overflow:ellipsis;
+          font-size rem(28)
           .listFoot
-              height rem(80)
-              position relative
-            .heartWrapper
-              overflow hidden
-              position absolute
-              right 0
-              bottom rem(5)
-              .heart
-                display inline-block
-                width rem(26)
-                height rem(21)
-                background url("爱心.png") no-repeat
-                background-size 100%
-                vertical-align middle
-              .heartShow
-                display inline-block
-                width rem(26)
-                height rem(21)
-                background url("爱心-拷贝-2.png") no-repeat
-                background-size 100%
-                vertical-align middle
-              .heartNum
-                vertical-align middle
-                font-size rem(30)
-    footer
+            height rem(80)
+            position relative
+          .heartWrapper
+            overflow hidden
+            position absolute
+            right 0
+            bottom rem(5)
+            .heart
+              display inline-block
+              width rem(26)
+              height rem(21)
+              background url("爱心.png") no-repeat
+              background-size 100%
+              vertical-align middle
+            .heartShow
+              display inline-block
+              width rem(26)
+              height rem(21)
+              background url("爱心-拷贝-2.png") no-repeat
+              background-size 100%
+              vertical-align middle
+            .heartNum
+              vertical-align middle
+              font-size rem(30)
+    .wishFooter2
+      width 100%
       height rem(290)
-      display flex
-      align-items center /*垂直居中*/
-      justify-content center /*水平居中*/
-     .wishFooter2
-     width 100%
-       height rem(290)
       .button
         width rem(260)
         height rem(115)
@@ -158,100 +158,99 @@
         background-color transparent
         border none
 
-    .wishRules
-      position absolute
-      z-index: 999
-      width 100%
-      height 100%
-      background rgba(7,17,27,0.8)
-      top 0
-      left 0
-      .rulesBox
-        width rem(624)
-        height rem(894)
-        margin rem(114) rem(64) 0
-        background-image url("./飞毯.png")
-        background-size 100%
-        display flex
-        align-items center /*垂直居中*/
-        justify-content center /*水平居中*/
-        .rulesText
-          width rem(360)
-          height rem(660)
-          overflow auto
-          .textWrapper
-            width 100%
-            overflow hidden
-            .rulesTitle
+
+  .wishRules
+    position absolute
+    z-index: 999
+    width 100%
+    height 100%
+    background rgba(7,17,27,0.8)
+    top 0
+    left 0
+    .rulesBox
+      width rem(624)
+      height rem(894)
+      margin rem(114) rem(64) 0
+      background-image url("./飞毯.png")
+      background-size 100%
+      display flex
+      align-items center /*垂直居中*/
+      justify-content center /*水平居中*/
+      .rulesText
+        width rem(360)
+        height rem(660)
+        overflow auto
+        .textWrapper
+          width 100%
+          overflow hidden
+          .rulesTitle
+            font-size rem(30)
+            color #f8cb0c
+            padding-bottom rem(50)
+          .rulesList
+            padding-bottom rem(36)
+            text-align left
+            h3
               font-size rem(30)
               color #f8cb0c
-              padding-bottom rem(50)
-            .rulesList
-              padding-bottom rem(36)
-              text-align left
-              h3
-                font-size rem(30)
-                color #f8cb0c
-              p
-                font-size rem(26)
-                color #fff
-              .rulesStar
-                font-size rem(26)
-                color #fff
-                padding-bottom rem(10)
-                &:before
-                  content ""
-                  width rem(24)
-                  height rem(23)
-                  display inline-block
-                  background-image url("星.png")
-                  background-size 100%
-      .rulesClos
-        display inline-block
-        width rem(66)
-        height rem(66)
-        background-image url("./关闭-6.png")
-        background-size 100%
-        margin-top rem(8)
+            p
+              font-size rem(26)
+              color #fff
+            .rulesStar
+              font-size rem(26)
+              color #fff
+              padding-bottom rem(10)
+              &:before
+                content ""
+                width rem(24)
+                height rem(23)
+                display inline-block
+                background-image url("星.png")
+                background-size 100%
+    .rulesClos
+      display inline-block
+      width rem(66)
+      height rem(66)
+      background-image url("./关闭-6.png")
+      background-size 100%
+      margin-top rem(8)
 
 
 </style>
 <style>
-	  .updateText{
-	  	position: absolute;
-	  	width: 100%;
+  .updateText{
+    position: absolute;
+    width: 100%;
 
-	  	text-align: center;
-	  	/*z-index: 999;*/
-	 		color:#F8CB0C;
-	  	display: none;
-	  }
-	  .downloadText{
-	  	position: absolute;
-	  	width: 100%;
-	  	display: none;
-	    color:#F8CB0C;
-	  	text-align: center;
-	  	/*z-index: 999;*/
-
-	  }
-	  .noneData{
-	  	display: none;
-	  	clear: both;
-	  }
-	  .wishBtn{
-	  	position: absolute;
-	  	 	/*z-index: 999;*/
-	  	 	transform: translateX(-50%);
-	  	 	margin-top: 30px;
-    }
-    html{
-      -ms-overflow-style:none;
-      overflow:-moz-scrollbars-none;
-    }
-    /*html::-webkit-scrollbar{width:0px}*/
-    ::-webkit-scrollbar {width: 0px;height: 1px;}
-    ::-webkit-scrollbar-thumb {border-radius: 5px;-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);background: rgba(0, 0, 0, 0.2);}
+    text-align: center;
+    z-index: 999;
+    color:#F8CB0C;
+    display: none;
+  }
+  .downloadText{
+    position: absolute;
+    width: 100%;
+    color:#F8CB0C;
+    text-align: center;
+    z-index: 999;
+  }
+  .noneData{
+    display: none;
+    clear: both;
+  }
+  .wishBtn{
+    position: absolute;
+    z-index: 999;
+    transform: translateX(-50%);
+    margin-top: 30px;
+  }
+  html{
+    -ms-overflow-style:none;
+    overflow:-moz-scrollbars-none;
+  }
+  /*html::-webkit-scrollbar{width:0px}*/
+  ::-webkit-scrollbar {width: 0px;height: 1px;}
+  ::-webkit-scrollbar-thumb {border-radius: 5px;-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);background: rgba(0, 0, 0, 0.2);}
 </style>
 <template>
   <div id="wishList">
@@ -265,65 +264,68 @@
       </div>
     </header>
     <div class="updateText">正在更新数据...</div>
-      <div>
-          <div class="content" ref="contWrapper" >
-            <div class="contWrapper" ref="scroll" v-on:touchmove="init($event)" >
-              <ul v-for="(item, index) in lists" class="lists" >
-                <li class="list" >
-                  <div class="listHead">
-                    <img :src='item.headUrl' alt="用户头像" class="wishImg">
-                    <h3 class="wishName">{{item.nickname}}</h3>
-                    <p class="wishTime">{{item.time | moment}}</p>
-                  </div>
-                  <div class="listContainer">
-                    {{item.wish}}
-                  </div>
-                  <div class="listFoot">
-                    <div class="heartWrapper">
-                      <span :class="item.heartNum?'heart':'heartShow'" @click="changeHeart(index)"></span>
-                      <span class="heartNum">{{item.praiseNum}}</span></div>
-                  </div>
-                </li>
-              </ul>
-              <div class="noneData">没有更多数据了</div>
-            </div>
-          </div>
+    <div>
+      <div class="content" ref="contWrapper" v-on:touchmove="stopPropagation($event)">
+        <div class="contWrapper" ref="scroll"
+             v-infinite-scroll="loadMore"
+             infinite-scroll-disabled="loading"
+             infinite-scroll-distance="10">
+          <mt-loadmore :top-method="loadTop"  ref="loadmore">
+            <ul v-for="(item, index) in lists" class="lists" >
+              <li class="list" >
+                <div class="listHead">
+                  <img :src='item.headUrl' alt="用户头像" class="wishImg">
+                  <h3 class="wishName">{{item.nickname}}</h3>
+                  <p class="wishTime">{{item.time | moment}}</p>
+                </div>
+                <div class="listContainer">
+                  {{item.wish}}
+                </div>
+                <div class="listFoot">
+                  <div class="heartWrapper">
+                    <span :class="item.heartNum?'heart':'heartShow'" @click="changeHeart(index)"></span>
+                    <span class="heartNum">{{item.praiseNum}}</span></div>
+                </div>
+              </li>
+            </ul>
+          </mt-loadmore>
+
+        </div>
       </div>
-
-
-     <div class="downloadText">正在加载数据...</div>
-      <div class="wishFooter2">
-     <Button type="primary" size="large" class="button wishBtn" @click="pubWish"></Button>
-     </div>
+    </div>
+    <div class="downloadText noneData">没有更多数据了</div>
+    <div class="downloadText" v-if="loading_show">正在加载数据...</div>
+    <div class="wishFooter2">
+      <Button type="primary" size="large" class="button wishBtn" @click="pubWish"></Button>
+    </div>
     <footer class="wishFooter">
-
     </footer>
     <div v-if="rulesShow" class="wishRules" name="Fade" v-on:touchmove="stopPropagation($event)">
       <div class="rulesBox">
         <div class="rulesText" ref="textWrapper" >
           <div class="textWrapper" ref="scroll"  >
-              <div class="rulesTitle">活动规则</div>
-              <div class="rulesList">
-                <h3>1.活动时间</h3>
-                <p>2017.07.25 -- 2017.9.28</p>
-              </div>
-              <div class="rulesList">
-                <h3>2.参选条件</h3>
-                <p>下载皮皮虾旅行App,进行报名并收集好友祝福</p>
-              </div>
-              <div class="rulesList">
-                <h3>3.参选规则</h3>
-                <p class="rulesStar">点赞数排名第一，第二名，将获得机票+点赞数相应的积分数</p>
-                <p class="rulesStar">点赞数排名第3~22名，将获得。。。+点赞相应的积分数</p>
-                <p class="rulesStar">每位参与用户都将获得点赞数相应的积分数</p>
-                <p class="rulesStar">以上奖金都需要通过下载皮皮虾旅行app领取，积分将发送至报名手机号相应的皮皮虾旅行账户中</p>
-                <p class="rulesStar">请在活动截止后1个月内下载APP领取积分，逾期积分未领取，将视为放弃领取资格，积分失效~</p>
-              </div>
-              <div class="rulesList">
-                <h3>4.评选方式</h3>
-                <p>本场获得祝福最多用户票选</p>
-              </div>
+            <div class="rulesTitle">活动规则</div>
+            <div class="rulesList">
+              <h3>1.活动时间</h3>
+              <p>2017.07.25 -- 2017.9.28</p>
             </div>
+            <div class="rulesList">
+              <h3>2.参选条件</h3>
+              <p>下载皮皮虾旅行App,进行报名并收集好友祝福</p>
+            </div>
+            <div class="rulesList">
+              <h3>3.参选规则</h3>
+              <p class="rulesStar">点赞数排名第一，第二名，将获得机票+点赞数相应的积分数</p>
+              <p class="rulesStar">点赞数排名第3~22名，将获得。。。+点赞相应的积分数</p>
+              <p class="rulesStar">每位参与用户都将获得点赞数相应的积分数</p>
+              <p class="rulesStar">以上奖金都需要通过下载皮皮虾旅行app领取，积分将发送至报名手机号相应的皮皮虾旅行账户中</p>
+              <p class="rulesStar">请在活动截止后1个月内下载APP领取积分，逾期积分未领取，将视为放弃领取资格，积分失效~</p>
+            </div>
+            <div class="rulesList">
+              <h3>4.评选方式</h3>
+              <p>本场获得祝福最多用户票选</p>
+            </div>
+          </div>
         </div>
       </div>
       <span class="rulesClos" @click="hideRules"></span>
@@ -332,6 +334,7 @@
 </template>
 
 <script>
+  // import BScroll from 'better-scroll'
   import axios from 'axios'
   import Scroll from '../pull/pull-refresh.vue'
   import IndexService from '../../services/indexService'
@@ -353,221 +356,125 @@
         postsuccess:false,
         weixinStatus:false,
         nickName:'',
-        headUrl:''
+        headUrl:'',
+        loading_show:false
       }
     },
     created () {
-       this.loadData()
+      this.loadData()
       this.is_weixin()
     },
-    mounted () {
-			this.init()
-    },
-
     methods: {
       stopPropagation(event){
         event.stopPropagation()
       },
       loadTop() {
-        // load more data
-        console.log("上拉刷新")
+        console.log("下拉刷新")
+        this.reCeateDate()//新的请求
         this.$refs.loadmore.onTopLoaded();
       },
       loadMore() {
+        console.log("上拉加载更多")
         this.loading = true;
-        setTimeout(() => {
-          let last = this.list[this.list.length - 1];
-          for (let i = 1; i <= 10; i++) {
-            this.list.push(last + i);
-          }
-          this.loading = false;
-        }, 2500);
+        this.ajaxdate()
+        this.loading = false;
       },
       loadData(){
-          // 设置一个开关来避免重负请求数据
-          // axios.get('http://101.251.240.134:8080/wish/api/v1/wish')
-          IndexService.wishwall(this.CurrentPageIndex,'fc3825e6-b05c-486e-8ac0-a1212949d001','oHSNYwK0DNBLRf6ts3qbzzedILDQ','2')
-
+        // 设置一个开关来避免重负请求数据
+        // axios.get('http://101.251.240.134:8080/wish/api/v1/wish')
+        IndexService.wishwall(this.CurrentPageIndex,'fc3825e6-b05c-486e-8ac0-a1212949d001','oHSNYwK0DNBLRf6ts3qbzzedILDQ','2')
           .then((response) => {
             console.log(response)
             if (response.code === ERR_OK) {
-              this.wish = response.data
+              this.lists = response.data
               this.postsuccess=true
-
-              // //添加多条假数据测试---------
-              // this.wish.push(this.wish[0]);
-              // this.wish.push(this.wish[0]);
-              // this.wish.push(this.wish[0]);
-              // this.wish.push(this.wish[0]);
-              // this.wish.push(this.wish[0]);
-              // this.wish.push(this.wish[0]);
-              // this.wish.push(this.wish[0]);
-              // this.wish.push(this.wish[0]);
-              // this.wish.push(this.wish[0]);
-              // this.wish.push(this.wish[0]);
-              // this.wish.push(this.wish[0]);
-              // this.wish.push(this.wish[0]);
-              // this.wish.push(this.wish[0]);
-              //--------
-              // console.log(JSON.stringify(response.data.data));
-              console.log(response.data);
-              if (this.CurrentPageIndex === 1) {
-                this.lists = []
-                for (let i = 0; i < this.PageSize; i++) {
-                  if (this.wish[i]) {
-                    this.lists.push(this.wish[i])
-                  }
-                  console.log(this.lists)
-                }
-              } else {
-                for (let i = 0; i < this.PageSize; i++) {
-                  if (this.wish[i]) {
-                    this.lists.push(this.wish[i])
-                  }
-                }
-              }
               this.CurrentPageIndex += 1 // 页面+1
-              this.$nextTick(() => {
-                this._initScroll()
-              })
             }
           })
           .catch((err) => {
             console.log(err)
           })
-        },
-      // this.wish.push(this.wish[0])
-			init(event){
-        // event.stopPropagation()
-//				document.getElementById("dd").addEventListener("scroll",function(){alert("we");})
-				let content = document.getElementsByClassName("content")[0]
-				let contWrapper = document.getElementsByClassName("contWrapper")[0]
-				let updateText  = document.getElementsByClassName("updateText")[0]
-				let downloadText  = document.getElementsByClassName("downloadText")[0]
-				let _this = this;
-				let pullFlag = 0 ;//代理
-
-        	// updateText.style.display = "none";
-					// downloadText.style.display = "none";
-				//监听开始触摸事件
-				// content.addEventListener('touchstart',function(event){
-        //   event.stopPropagation()
-				// 	updateText.style.display = "none";
-				// 	downloadText.style.display = "none";
-				// })
-				//监听触摸过程事件
-			  content.addEventListener('touchmove',function(event){
-          event.stopPropagation()
-			  	//阻止浏览器默认事件
-			  	// event.preventDefault()
-			  	//获取当前滚动的位置
-
-			  	let pullNum = contWrapper.style.transform.substring(contWrapper.style.transform.indexOf(", ")+1,contWrapper.style.transform.indexOf("px)"));
-			  		let scrollContainer = contWrapper.offsetHeight/2;
-			  		console.log(scrollContainer);
-
-//			  		 // 如果这个元素的位置内只有一个手指的话
-//    				if(event.targetTouches.length == 1) {
-//    				  //下拉大于30更新
-//    					   if(pullNum>30){
-//    					   		pullFlag = 1
-//    					   		updateText.style.display = "block";
-//    					   }
-//    					   //下拉到底部加载
-//    					   if(Math.abs( pullNum)>=Math.abs(_this.contScroll.maxScrollY)){
-//    					  		pullFlag = 2
-//
-//    					  		if(_this.noneDataNum==0){
-//    					   			downloadText.style.display = "block";
-//    					   	}
-//    					   }
-//
-//    				}
-
-			  });
-			  //监听结束事件
-			  content.addEventListener('touchend',function(){
-			  	if(pullFlag==1){
-			  		//下面全部数据还原（下拉更新）  //--------
-			  		document.querySelector(".noneData").style.display = "none";
-			  		pullFlag=0;
-			  		_this.lists=[]
-			  		_this.CurrentPageIndex = 1;
-			  		_this.reCeateDate();
-			  		_this.scrollY=0;
-			  		_this.noneDataNum = 0 ;
-					 	_this.$nextTick(() => {
-             _this._initScroll()
-            })
-            //--------
-			  		updateText.style.display = "none";
-			  	}
-			  	else if(pullFlag==2){
-			  			downloadText.style.display = "none";
-			  		 	_this.ajaxdate();
-			  		 	pullFlag=0;
-			  		 }
-			  });
-			  //监听取消事件
-			   content.addEventListener('touchcancel',function(){
-			  	if(pullFlag==1){
-			  		//下面全部数据还原（下拉更新）  //--------
-			  		document.querySelector(".noneData").style.display = "none";
-			  		pullFlag=0;
-			  		_this.lists=[]
-			  		_this.CurrentPageIndex = 1;
-			  		_this.reCeateDate();
-			  		_this.scrollY=0;
-			  		_this.noneDataNum = 0 ;
-					 	_this.$nextTick(() => {
-             _this._initScroll()
-            })
-            //--------
-			  		updateText.style.display = "none";
-			  	}
-			  	else if(pullFlag==2){
-			  			downloadText.style.display = "none";
-			  		 	_this.ajaxdate();
-			  		 	pullFlag=0;
-			  		 }
-			  });
-      	this.touchStart("title",0);
-      	this.touchStart("wishFooter",0);
-			}
-			,
-      _initScroll () {
-        this.contScroll = new BScroll(this.$refs.contWrapper, {
-          hasVerticalScroll: true,
-          click: true,
-          bounce: true,
-          startY:this.scrollY
-        })
       },
-       is_weixin(){
-          var ua = navigator.userAgent.toLowerCase();
-          if(ua.match(/MicroMessenger/i)=="micromessenger") {
-             this.weixinStatus = true;
-             let code = this.GetQueryString('code')
-              IndexService.getuserinfo(code)
-              .then((recvdata)=>{
-                  if(recvdata.code==200){
-                    this.nickName = recvdata.data.nickName
-                    this.headUrl = recvdata.data.headImgUrl
-                  }
-              })
-          } else {
-              this.weixinStatus = false;
-          }
+      reCeateDate(){
+        console.log(1)
+        this.CurrentPageIndex=1
+        //因为下拉要更新 所以不能引用上面的数据 要重新获取一次数据库数据才叫更新
+        IndexService.wishwall(this.CurrentPageIndex)
+          .then((response) => {
+            if (response.code === ERR_OK) {
+              this.wish = response.data
+              this.CurrentPageIndex += 1 // 页面+1
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      },
+      ajaxdate(){
+
+        if(!this.postsuccess){
+          return
+        }
+        let  noneData = document.querySelector(".noneData");
+        if(this.noneDataNum==1){
+          noneData.style.display = "block" //没有更多数据了
+          setTimeout(function(){
+            noneData.style.display = "none"
+          },1000)
+          return
+        }
+        this.postsuccess=false
+        this.loading_show = true
+        IndexService.wishwall(this.CurrentPageIndex,'fc3825e6-b05c-486e-8ac0-a1212949d001','oHSNYwK0DNBLRf6ts3qbzzedILDQ','2')
+          .then((response) => {
+            let _this =this
+            setTimeout(function(){
+              _this.loading_show = false
+            },500)
+            if (response.code === ERR_OK) {
+              this.postsuccess=true
+              if(response.data.length){
+                for(let i=0;i<response.data.length;i++){
+                  this.lists.push(response.data[i])
+                }
+                this.CurrentPageIndex += 1 // 页面+1
+                this.scrollY = this.contScroll.startY;
+              }else{
+                noneData.style.display = "block"
+                setTimeout(function(){
+                  noneData.style.display = "none"
+                },1000)
+                this.noneDataNum = 1;
+                return;
+              }
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+          })},
+      is_weixin(){
+        var ua = navigator.userAgent.toLowerCase();
+        if(ua.match(/MicroMessenger/i)=="micromessenger") {
+          this.weixinStatus = true;
+          let code = this.GetQueryString('code')
+          IndexService.getuserinfo(code)
+            .then((recvdata)=>{
+              if(recvdata.code==200){
+                this.nickName = recvdata.data.nickName
+                this.headUrl = recvdata.data.headImgUrl
+              }
+            })
+        } else {
+          this.weixinStatus = false;
+        }
       },
       GetQueryString(name){
-          var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
-          var r = window.location.search.substr(1).match(reg);
-          if(r != null) return unescape(r[2])
-          return null
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+        var r = window.location.search.substr(1).match(reg);
+        if(r != null) return unescape(r[2])
+        return null
       },
       changeHeart (index) {
-        console.log(index)
-        console.log(this.lists)
         this.lists[index].heartNum = !this.lists[index].heartNum
         let data={}
         if (this.lists[index].heartNum) {
@@ -587,23 +494,21 @@
             }
           }
           IndexService.praise(data)
-          .then((recvdata)=>{
+            .then((recvdata)=>{
 
-          })
+            })
         } else if (!this.lists[index].heartNum) {
           this.lists[index].praiseNum --
           IndexService.praise(data)
-          .then((recvdata)=>{
+            .then((recvdata)=>{
 
-          })
+            })
         }
         this.$set(this.lists)
-
       }
       ,
       pubWish () {
         this.$router.push({path: '/pubWish'})
-
       },
       showRules () {
         this.rulesShow = true
@@ -613,7 +518,6 @@
         this.rulesShow = false
       },
       down () {
-
         this.$refs.scroll.addEventListener({
           name: 'scrolltobottom',
           extra: {

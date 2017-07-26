@@ -33,7 +33,7 @@ class IndexService {
         body:{
           mobile:data.mobile,
           channel:data.channel,
-          userId:'',
+          userId:data.userId,
           headUrl:data.headUrl,
           nickName:data.nickName,
           wish:data.wish,
