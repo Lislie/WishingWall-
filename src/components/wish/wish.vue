@@ -332,7 +332,6 @@
 </template>
 
 <script>
-//  import BScroll from 'better-scroll'
   import axios from 'axios'
   import Scroll from '../pull/pull-refresh.vue'
   import IndexService from '../../services/indexService'
@@ -521,23 +520,23 @@
 			  		let scrollContainer = contWrapper.offsetHeight/2;
 			  		console.log(scrollContainer);
 
-			  		 // 如果这个元素的位置内只有一个手指的话
-    				if(event.targetTouches.length == 1) {
-    				  //下拉大于30更新
-    					   if(pullNum>30){
-    					   		pullFlag = 1
-    					   		updateText.style.display = "block";
-    					   }
-    					   //下拉到底部加载
-    					   if(Math.abs( pullNum)>=Math.abs(_this.contScroll.maxScrollY)){
-    					  		pullFlag = 2
-
-    					  		if(_this.noneDataNum==0){
-    					   			downloadText.style.display = "block";
-    					   	}
-    					   }
-
-    				}
+//			  		 // 如果这个元素的位置内只有一个手指的话
+//    				if(event.targetTouches.length == 1) {
+//    				  //下拉大于30更新
+//    					   if(pullNum>30){
+//    					   		pullFlag = 1
+//    					   		updateText.style.display = "block";
+//    					   }
+//    					   //下拉到底部加载
+//    					   if(Math.abs( pullNum)>=Math.abs(_this.contScroll.maxScrollY)){
+//    					  		pullFlag = 2
+//
+//    					  		if(_this.noneDataNum==0){
+//    					   			downloadText.style.display = "block";
+//    					   	}
+//    					   }
+//
+//    				}
 
 			  });
 			  //监听结束事件
