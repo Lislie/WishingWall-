@@ -90,11 +90,25 @@
           width rem(256)
 
 
-
 </style>
+<style scoped>
+.tost{
+  	position: absolute;
+  	top: 40%;
+  	color: #F8CB0C;
+  	font-size: 25px;
+  	opacity: 0;
 
+  	transform: translateX(-50%);
+  	-webkit-transform: translateX(-50%);
+  	left:-100%;
+  	transition:all  linear 1s ;
+  	-webkit-transition: all  linear 1s ;
+  }
+</style>
 <template>
   <div class="page5">
+    <div class="tost">qweqw</div>
     <header class="headPage5">
       <h3 class="headH3">您的小伙伴{{wish.nickname}}正在参与写心愿送机票的活动快来帮他点赞</h3>
     </header>
@@ -109,7 +123,7 @@
           {{wish.wish}}
         </div>
       </div>
-      <div class="page5Heart">
+      <div class="page5Heart" @click='clickGood()'>
         <img src="./爱心-拷贝-4.png" class="bigHeart">
         <p class="heartNum">{{wish.praiseNum}}</p>
       </div>
@@ -130,28 +144,24 @@
 
 <script type="text/ecmascript-6">
   import axios from 'axios'
-
+  import IndexService from '../../services/indexService'
   const ERR_OK = 200
   export default {
     data () {
       return {
         wish: {},
-        rulesShow: false
+        rulesShow: false,
+        id:'',
+        weixinStatus:false,
+        nickName:'',
+        headImgUrl:''
       }
     },
     created () {
+      this.id=this.$route.params.id
       // 设置一个开关来避免重负请求数据
-      axios.get('http://101.251.240.134:8080/wish/api/v1/wish/fc3825e6-b05c-486e-8ac0-a1212949d011')
-        .then((response) => {
-          if (response.data.code === ERR_OK) {
-            this.wish = response.data.data
-            console.log(this.wish)
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-      axios.post('http://101.251.240.134:8080/wish/api/v1/praise', {
+      this.loadData()
+      /*axios.post('http://101.251.240.134:8080/wish/api/v1/praise', {
         id: '',
         userId: '',
         channel: '2'
@@ -160,11 +170,111 @@
           if (response.data.code === ERR_OK) {
             console.log(response.id)
           }
-        })
+        })*/
     },
     methods: {
+      is_weixin(){
+          var ua = navigator.userAgent.toLowerCase();
+          if(ua.match(/MicroMessenger/i)=="micromessenger") {
+             this.weixinStatus = true;
+             let code = this.GetQueryString('code')
+              IndexService.getuserinfo(code)
+              .then((recvdata)=>{
+                  if(recvdata.code==200){
+                    this.nickName = recvdata.data.nickName
+                    this.headImgUrl = recvdata.data.headImgUrl
+                  }
+              })
+          } else {
+              this.weixinStatus = false;
+          }
+      },
+      GetQueryString(name){
+          var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+          var r = window.location.search.substr(1).match(reg);
+          if(r != null) return unescape(r[2])
+          return null
+      },
+      loadData(){
+          axios.get('http://101.251.240.134:8080/wish/api/v1/wish/'+this.id)
+          .then((response) => {
+            if (response.data.code === ERR_OK) {
+              this.wish = response.data.data
+              console.log(this.wish)
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      },
+    	//点赞通道
+    	clickGood(){
+    		//调用后台接口获取打开链接的OpenID，然后记录，此人已经为这个用户点赞过了，避免同一个人重复点赞
+    		//然后只要这个人的点赞字段+1就行了
+        var tost = document.getElementsByClassName("tost")[0];
+    		if(this.weixinStatus){
+          let data ={
+              channel:2,
+              headUrl:this.headImgUrl,
+              nickName:this.nickName,
+              id:this.id
+            }
+            IndexService.praise(data)
+            .then((recvdata)=>{
+                if(recvdata.code==200){
+                    this.loadData()
+                    tost.innerText="点赞成功";
+                    tost.style.opacity = 1;
+                    tost.style.left = "50%";
+                    this.timerLeave();
+                    return false;
+                }else{
+                    tost.innerText=recvdata.msg;
+                    tost.style.opacity = 1;
+                    tost.style.left = "50%";
+                    this.timerLeave();
+                    return false;
+                }
+              })
+        }else{
+          let userid = this.GetQueryString('userId')
+          let data ={
+              channel:1,
+              userId:userid,
+              id:this.id
+            }
+            IndexService.praise(data)
+            .then((recvdata)=>{
+                if(recvdata.code==200){
+                    this.loadData()
+                    tost.innerText="点赞成功";
+                    tost.style.opacity = 1;
+                    tost.style.left = "50%";
+                    this.timerLeave();
+                    return false;
+                }else{
+                    tost.innerText=recvdata.msg;
+                    tost.style.opacity = 1;
+                    tost.style.left = "50%";
+                    this.timerLeave();
+                    return false;
+                }
+              })
+        }
+    	}
+    	,
       toIndex () {
         this.$router.push({path: '/'})
+      },
+      timerLeave(){
+        setTimeout(()=>{
+          this.leaveTost();
+        },3000)
+      },
+      leaveTost(){
+    		var tost = document.getElementsByClassName("tost")[0];
+        tost.style.opacity = 0;
+        tost.style.left = "-100%";
       }
     }
   }

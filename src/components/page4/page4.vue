@@ -87,6 +87,26 @@
 
 
 
+    .page4Rules
+      position absolute
+      z-index:1000
+      width 100%
+      height 100%
+      background-image url("./许愿H5-页面新-7-浮层.png")
+      background-repeat no-repeat
+      background-size 100%
+      top 0
+      left 0
+      .page4Clos
+        display inline-block
+        width rem(66)
+        height rem(66)
+        background-image url("./关闭-6.png")
+        background-size 100%
+        position absolute
+        top rem(400)
+        left rem(350)
+
 </style>
 
 <template>
@@ -112,20 +132,22 @@
     </div>
     <footer class="footpage4">
       <div class="btnpage4">
-        <button class="btnRight" @click="invite">邀请小伙伴帮我点赞</button>
+        <button class="btnRight" @click="showRules">邀请小伙伴帮我点赞</button>
       </div>
       <div class="page4ma">
         <p>扫描二维码，下载皮皮虾旅行哦</p>
         <img src="./二维码.png" alt="">
       </div>
     </footer>
+    <div v-if="page4Show" class="page4Rules" name="Fade" >
+      <span class="page4Clos" @click="hideRules"></span>
+    </div>
   </div>
-
 </template>
 
 <script type="text/ecmascript-6">
     import axios from 'axios'
-
+     import IndexService from '../../services/indexService'
     const ERR_OK = 200
 //    const wx = Vue.wechat
 
@@ -133,12 +155,23 @@
       data () {
         return {
           wish: {},
-          rulesShow: false
+          page4Show: false,
+          id:''
         }
       },
       created () {
         // 设置一个开关来避免重负请求数据
-        axios.get('http://101.251.240.134:8080/wish/api/v1/wish/fc3825e6-b05c-486e-8ac0-a1212949d011')
+        //根据传过来的用户ID查找数据库的数据 就行了
+        this.id=this.$route.params.id
+        console.log(this.id)
+        /*let id = 'fc3825e6-b05c-486e-8ac0-a1212949d011'*/
+        IndexService.get_one_wish(this.id)
+        .then((recvdata)=>{
+          if(recvdata.code==200){
+            this.wish=recvdata.data
+          }
+        })
+        /*axios.get('http://101.251.240.134:8080/wish/api/v1/wish/fc3825e6-b05c-486e-8ac0-a1212949d011')
           .then((response) => {
             if (response.data.code === ERR_OK) {
               this.wish = response.data.data
@@ -147,74 +180,21 @@
           })
           .catch((err) => {
             console.log(err)
-          })
+          })*/
       },
       mounted () {
-//          var link = '/invite'
-//
-//          var url = window.location.href
-//          axios({
-//            method: "post",
-//            url: "/api/v1/signature",
-//            dataType: "json",
-//            data:{
-//              "url":url
-//            },
-//            success: function ( data ) {
-//              pResult = eval( data )
-//              timestamp = pResult.timestamp
-//              nonceStr = pResult.nonceStr
-//              signature = pResult.signature
-//              wx.config({
-//                debug: false,
-//                // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
-//                appId: 'wx21744c1d2e6c62fe',
-//                timestamp: timestamp,
-//                nonceStr: nonceStr,
-//                signature: signature,
-//                jsApiList: [
-//                  // 需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
-//                  'onMenuShareTimeline',
-//                  'onMenuShareAppMessage'
-//                ]
-//              })
-//
-//              wx.onMenuShareAppMessage({
-//                title: '小心肝小肉球正在参与皮皮虾旅行,发心愿送机票的活动,快来帮他点赞吧~', // 分享标题
-//                desc: '皮皮虾旅行全心奉献，发表心愿我来帮你实现，国际知名设计师量身定制行程并赠送机票！快来参加许愿吧~', // 分享描述
-//                link: link, // 分享链接
-//                imgUrl: 'http://wxtest.easyto.com/weichat/paying/payImg/shareImg.png', // 分享图标
-//                type: '', // 分享类型,music、video或link，不填默认为link
-//                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-//                success: function () {
-//                  // 用户确认分享后执行的回调函数
-//                },
-//                cancel: function () {
-//                  // 用户取消分享后执行的回调函数
-//                }
-//              }) // 分享给朋友
-//
-//              wx.onMenuShareTimeline({
-//                title: '小心肝小肉球”正在参与皮皮虾旅行发心愿送机票活动，快来帮他点赞吧~', // 分享标题
-//                link: link, // 分享链接
-//                imgUrl: 'http://app.easyto.com/weichat/paying/payImg/shareImg.png', // 分享图标
-//                type: '', // 分享类型,music、video或link，不填默认为link
-//                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-//                success: function () {
-//                  // 用户确认分享后执行的回调函数
-//                },
-//                cancel: function () {
-//                  // 用户取消分享后执行的回调函数
-//                }
-//              }) // 分享到朋友圈
-//            }
-//
-//          })
+//          var link = '/invite
       },
       methods: {
         invite () {
-          this.$router.push({path: '/share'})
-        }
+          this.$router.push({path: '/share/'+this.id})
+        },
+        showRules () {
+          this.page4Show = true
+        },
+        hideRules () {
+          this.page4Show = false
+        },
       }
     }
 

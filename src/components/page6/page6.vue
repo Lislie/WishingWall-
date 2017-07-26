@@ -146,12 +146,24 @@
     data () {
       return {
         wish: {},
-        rulesShow: false
+        rulesShow: false,
+        id:''
       }
     },
     created () {
+       this.id=this.$route.params.id
       // 设置一个开关来避免重负请求数据
-      axios.get('http://101.251.240.134:8080/wish/api/v1/wish/fc3825e6-b05c-486e-8ac0-a1212949d011')
+      this.loadData()
+    },
+    methods: {
+      invite () {
+        this.$router.push({path: '/share'})
+      },
+      toIndex () {
+        this.$router.push({path: '/'})
+      },
+      loadData(){
+         axios.get('http://101.251.240.134:8080/wish/api/v1/wish/'+this.id)
         .then((response) => {
           if (response.data.code === ERR_OK) {
             this.wish = response.data.data
@@ -161,13 +173,6 @@
         .catch((err) => {
           console.log(err)
         })
-    },
-    methods: {
-      invite () {
-        this.$router.push({path: '/share'})
-      },
-      toIndex () {
-        this.$router.push({path: '/'})
       }
     }
   }

@@ -14,7 +14,6 @@
     </div>
   </div>
 </template>
-
 <script type="text/ecmascript-6">
 
   export default {
@@ -36,46 +35,49 @@
         let word3 = document.getElementById('word3')
         let cloudSmall = document.getElementById('cloudSmall')
         lamp.classList.add('shake')
-        lamp.style.animationIterationCount = 2
-        setTimeout(function () {
+        lamp.style.animationIterationCount=2
+        setTimeout(function(){
           lamp.classList.remove('shake')
           cloudSmall.style.display = 'block'
           cloudSmall.classList.add('fadeIn1')
-        }, 800)
-        setTimeout(function () {
-          lamp.classList.add('shake')
-          lamp.style.animationIterationCount = 1
-        }, 1800)
-        setTimeout(function () {
-          lamp.classList.remove('shake')
+        },800)
+        /*setTimeout(function(){
+         /!*lamp.classList.add('shake')
+         lamp.style.animationIterationCount=1*!/
+         },1800)*/
+        setTimeout(function(){
+          /*lamp.classList.remove('shake')*/
           cloud.style.display = 'block'
-          cloud.classList.add('fadeIn1')
-        }, 2600)
-        setTimeout(function () {
-          lamp.classList.add('shake')
-          lamp.style.animationIterationCount = 1
-          cloud.setAttribute('class', 'fadeOut')
-          alading.style.display = 'block'
-          alading.classList.add('fadeIn3')
-        }, 3600)
-        setTimeout(function () {
+          cloud.classList.add('fadeIn2')
+        },1800)
+        setTimeout(function(){
+          /*lamp.classList.add('shake')
+           lamp.style.animationIterationCount=1*/
+          cloud.setAttribute('class','fadeOut')
+          /*alading.style.display = 'block'*/
+          /*alading.classList.add('scaleBig')*/
+        },2800)
+        setTimeout(function(){
           cloud.style.display = 'none'
-        }, 5600)
-        setTimeout(function () {
+          alading.style.display = 'block'
+          alading.classList.add('scaleBig')
+        },4300)
+        setTimeout(function(){
+          alading.classList.remove('scaleBig')
           alading.classList.add('float')
-        }, 5000)
-        setTimeout(function () {
+        },7500)
+        setTimeout(function(){
           word3.style.display = 'block'
           word3.classList.add('fadeInUp')
-          setTimeout(function () {
+          setTimeout(function(){
             word2.style.display = 'block'
             word2.classList.add('fadeInUp')
-          }, 400)
-          setTimeout(function () {
+          },400)
+          setTimeout(function(){
             word1.style.display = 'block'
             word1.classList.add('fadeInUp')
-          }, 800)
-        }, 5500)
+          },800)
+        },5500)
       }
     }
   }
@@ -171,6 +173,7 @@
 
 
 
+
   @-webkit-keyframes shake {
     from, to {
       -webkit-transform: translate3d(0, 0, 0)
@@ -232,7 +235,6 @@
     from {
       opacity: 0
     }
-
     to {
       opacity: 1
     }
@@ -283,20 +285,90 @@
       transform: none
     }
   }
+  @-webkit-keyframes scaleSmall {
+    from {
+      opacity: 1
+      -webkit-transform: scale(1.0,1.0)
+      transform: scale(1.0,1.0)
+      transform-origin: 80% 60%
+    }
+
+    to {
+      opacity: 0
+      -webkit-transform: scale(0,0)
+      transform: scale(0,0)
+      transform-origin: 80% 60%
+    }
+  }
+  @keyframes scaleSmall {
+    from {
+      opacity: 1
+      -webkit-transform: scale(1.0,1.0)
+      transform: scale(1.0,1.0)
+      -webkit-transform-origin: 80% 95%
+      transform-origin: 80% 60%
+    }
+
+    to {
+      opacity: 0
+      -webkit-transform: scale(0,0)
+      transform: scale(0,0)
+      -webkit-transform-origin: 80% 60%
+      transform-origin: 80% 60%
+    }
+  }
+  @-webkit-keyframes scaleBig {
+
+    from {
+      opacity: 0
+      -webkit-transform: scale(0,0)
+      transform: scale(0,0)
+      -webkit-transform-origin: 80% 95%
+      transform-origin: 80% 95%
+    }
+    to {
+      opacity: 1
+      -webkit-transform: scale(1.0,1.0)
+      transform: scale(1.0,1.0)
+      -webkit-transform-origin: 80% 95%
+      transform-origin: 80% 95%
+    }
+  }
+  @keyframes scaleBig {
+
+    from {
+      opacity: 0
+      -webkit-transform: scale(0,0)
+      transform: scale(0,0)
+      transform-origin: 80% 95%
+    }
+    to {
+      opacity: 1
+      -webkit-transform: scale(1.0,1.0)
+      transform: scale(1.0,1.0)
+      transform-origin: 80% 95%
+    }
+  }
   .fadeIn1{
     animation: fadeIn 1s
   }
   .fadeOut{
-    animation: fadeOut 2s
+    animation: fadeOut 1.5s ease-in
   }
   .fadeIn2{
     animation: fadeIn 2s
   }
   .fadeIn3{
-    animation: fadeIn 3s
+    animation: fadeIn 4s ease-out
   }
   .float{
     animation: ghostUpdown 4s linear infinite
+  }
+  .scaleSmall{
+    animation: scaleSmall 2s
+  }
+  .scaleBig{
+    animation: scaleBig 2.5s
   }
 
 </style>

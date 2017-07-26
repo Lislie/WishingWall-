@@ -23,7 +23,7 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 var proxyTable = config.dev.proxyTable
 
 var app = express()
-var appData = require('../data.json')
+var appData = require('../static/data.json')
 var wish = appData.data
 var code = appData.code
 

@@ -24,6 +24,7 @@
 </template>
 
 <script>
+
 export default {
   props: {
     offset: {
@@ -60,6 +61,7 @@ export default {
   },
   methods: {
     touchStart (e) {
+    	
       this.startY = e.targetTouches[0].pageY
       this.startScroll = this.$el.scrollTop || 0
       this.touching = true
@@ -99,6 +101,7 @@ export default {
     refresh () {
       this.state = 2
       this.top = this.offset
+     
       this.onRefresh(this.refreshDone)
     },
     refreshDone () {
@@ -116,13 +119,14 @@ export default {
     },
 
     onScroll (e) {
+    	alert("we");
       if (!this.enableInfinite || this.infiniteLoading) {
         return
       }
       let outerHeight = this.$el.clientHeight
       let innerHeight = this.$el.querySelector('.inner').clientHeight
       let scrollTop = this.$el.scrollTop
-      let ptrHeight = this.onRefresh ? this.$el.querySelector('.pull-refresh').clientHeight : 0
+	    let ptrHeight = this.onRefresh ? this.$el.querySelector('.pull-refresh').clientHeight : 0
       let infiniteHeight = this.$el.querySelector('.load-more').clientHeight
       let bottom = innerHeight - outerHeight - scrollTop - ptrHeight
       if (bottom < infiniteHeight) this.infinite()

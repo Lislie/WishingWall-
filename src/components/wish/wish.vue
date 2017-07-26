@@ -1,6 +1,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
   @import '../../assets/styl/rem.styl'
+
   #wishList
     overflow:-Scroll
     overflow-y hidden
@@ -47,7 +48,9 @@
       overflow hidden
       .contWrapper
         width 100%
-        overflow hidden
+        height 100%
+        left rem(280)
+        overflow scroll
       .lists
         float left
         position
@@ -140,10 +143,13 @@
                 vertical-align middle
                 font-size rem(30)
     footer
-      height rem(180)
+      height rem(290)
       display flex
       align-items center /*垂直居中*/
       justify-content center /*水平居中*/
+     .wishFooter2
+     width 100%
+       height rem(290)
       .button
         width rem(260)
         height rem(115)
@@ -153,8 +159,8 @@
         border none
 
     .wishRules
-      position fixed
-      z-index: 100
+      position absolute
+      z-index: 999
       width 100%
       height 100%
       background rgba(7,17,27,0.8)
@@ -175,7 +181,6 @@
           overflow auto
           .textWrapper
             width 100%
-            height 150%
             overflow hidden
             .rulesTitle
               font-size rem(30)
@@ -208,6 +213,45 @@
         background-image url("./关闭-6.png")
         background-size 100%
         margin-top rem(8)
+
+
+</style>
+<style>
+	  .updateText{
+	  	position: absolute;
+	  	width: 100%;
+
+	  	text-align: center;
+	  	/*z-index: 999;*/
+	 		color:#F8CB0C;
+	  	display: none;
+	  }
+	  .downloadText{
+	  	position: absolute;
+	  	width: 100%;
+	  	display: none;
+	    color:#F8CB0C;
+	  	text-align: center;
+	  	/*z-index: 999;*/
+
+	  }
+	  .noneData{
+	  	display: none;
+	  	clear: both;
+	  }
+	  .wishBtn{
+	  	position: absolute;
+	  	 	/*z-index: 999;*/
+	  	 	transform: translateX(-50%);
+	  	 	margin-top: 30px;
+    }
+    html{
+      -ms-overflow-style:none;
+      overflow:-moz-scrollbars-none;
+    }
+    /*html::-webkit-scrollbar{width:0px}*/
+    ::-webkit-scrollbar {width: 0px;height: 1px;}
+    ::-webkit-scrollbar-thumb {border-radius: 5px;-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);background: rgba(0, 0, 0, 0.2);}
 </style>
 <template>
   <div id="wishList">
@@ -220,39 +264,44 @@
         <h3 class="rulesH3">活动规则</h3>
       </div>
     </header>
-    <div class="content" ref="contWrapper">
-      <div class="contWrapper" ref="scroll">
-        <ul v-for="(item, index) in lists" class="lists">
-          <!--<div class="rangKing">-->
-          <!--<img src="./皇冠.png" alt="第一" class="gold">-->
-          <!--<img src="./银冠.png" alt="第二" class="sliver">-->
-          <!--</div>-->
-          <li class="list" >
-            <div class="listHead">
-              <img :src='item.headUrl' alt="用户头像" class="wishImg">
-              <h3 class="wishName">{{item.nickname}}</h3>
-              <p class="wishTime">{{item.time | moment}}</p>
+    <div class="updateText">正在更新数据...</div>
+      <div>
+          <div class="content" ref="contWrapper" >
+            <div class="contWrapper" ref="scroll" v-on:touchmove="init($event)" >
+              <ul v-for="(item, index) in lists" class="lists" >
+                <li class="list" >
+                  <div class="listHead">
+                    <img :src='item.headUrl' alt="用户头像" class="wishImg">
+                    <h3 class="wishName">{{item.nickname}}</h3>
+                    <p class="wishTime">{{item.time | moment}}</p>
+                  </div>
+                  <div class="listContainer">
+                    {{item.wish}}
+                  </div>
+                  <div class="listFoot">
+                    <div class="heartWrapper">
+                      <span :class="item.heartNum?'heart':'heartShow'" @click="changeHeart(index)"></span>
+                      <span class="heartNum">{{item.praiseNum}}</span></div>
+                  </div>
+                </li>
+              </ul>
+              <div class="noneData">没有更多数据了</div>
             </div>
-            <div class="listContainer">
-              {{item.wish}}
-            </div>
-            <div class="listFoot">
-              <div class="heartWrapper">
-                <span :class="item.heartNum?'heart':'heartShow'" @click="changeHeart(index)"></span>
-                <span class="heartNum">{{item.praiseNum}}</span></div>
-            </div>
-          </li>
-        </ul>
+          </div>
       </div>
 
-    </div>
-    <footer>
-      <Button type="primary" size="large" class="button" @click="pubWish"></Button>
+
+     <div class="downloadText">正在加载数据...</div>
+      <div class="wishFooter2">
+     <Button type="primary" size="large" class="button wishBtn" @click="pubWish"></Button>
+     </div>
+    <footer class="wishFooter">
+
     </footer>
-    <div v-show="rulesShow" class="wishRules" name="Fade" >
+    <div v-if="rulesShow" class="wishRules" name="Fade" v-on:touchmove="stopPropagation($event)">
       <div class="rulesBox">
-        <div class="rulesText" ref="rulesText" >
-          <div class="textWrapper">
+        <div class="rulesText" ref="textWrapper" >
+          <div class="textWrapper" ref="scroll"  >
               <div class="rulesTitle">活动规则</div>
               <div class="rulesList">
                 <h3>1.活动时间</h3>
@@ -283,9 +332,10 @@
 </template>
 
 <script>
-  import BScroll from 'better-scroll'
+//  import BScroll from 'better-scroll'
   import axios from 'axios'
   import Scroll from '../pull/pull-refresh.vue'
+  import IndexService from '../../services/indexService'
 
   const ERR_OK = 200
 
@@ -298,30 +348,101 @@
         lists: [],
         rulesShow: false,
         CurrentPageIndex: 1,
-        PageSize: 6
+        PageSize: 6,
+        scrollY:0,//存放better-scroll的起始Y坐标
+        noneDataNum:0, //没有数据的时候竖旗
+        postsuccess:false,
+        weixinStatus:false,
+        nickName:'',
+        headUrl:''
       }
     },
     created () {
-      // 设置一个开关来避免重负请求数据
-      axios.get('http://101.251.240.134:8080/wish/api/v1/wish')
-        .then((response) => {
-          if (response.data.code === ERR_OK) {
-            this.wish = response.data.data
-            if (this.CurrentPageIndex === 1) {
-              this.lists = []
-              for (let i = 0; i < this.PageSize; i++) {
-                if (this.wish[i]) {
-                  this.lists.push(this.wish[i])
+       this.loadData()
+      this.is_weixin()
+    },
+    mounted () {
+			this.init()
+    },
+
+    methods: {
+      stopPropagation(event){
+        event.stopPropagation()
+      },
+      loadTop() {
+        // load more data
+        console.log("上拉刷新")
+        this.$refs.loadmore.onTopLoaded();
+      },
+      loadMore() {
+        this.loading = true;
+        setTimeout(() => {
+          let last = this.list[this.list.length - 1];
+          for (let i = 1; i <= 10; i++) {
+            this.list.push(last + i);
+          }
+          this.loading = false;
+        }, 2500);
+      },
+      loadData(){
+          // 设置一个开关来避免重负请求数据
+          // axios.get('http://101.251.240.134:8080/wish/api/v1/wish')
+          IndexService.wishwall(this.CurrentPageIndex,'fc3825e6-b05c-486e-8ac0-a1212949d001','oHSNYwK0DNBLRf6ts3qbzzedILDQ','2')
+
+          .then((response) => {
+            console.log(response)
+            if (response.code === ERR_OK) {
+              this.wish = response.data
+              this.postsuccess=true
+
+              // //添加多条假数据测试---------
+              // this.wish.push(this.wish[0]);
+              // this.wish.push(this.wish[0]);
+              // this.wish.push(this.wish[0]);
+              // this.wish.push(this.wish[0]);
+              // this.wish.push(this.wish[0]);
+              // this.wish.push(this.wish[0]);
+              // this.wish.push(this.wish[0]);
+              // this.wish.push(this.wish[0]);
+              // this.wish.push(this.wish[0]);
+              // this.wish.push(this.wish[0]);
+              // this.wish.push(this.wish[0]);
+              // this.wish.push(this.wish[0]);
+              // this.wish.push(this.wish[0]);
+              //--------
+              // console.log(JSON.stringify(response.data.data));
+              console.log(response.data);
+              if (this.CurrentPageIndex === 1) {
+                this.lists = []
+                for (let i = 0; i < this.PageSize; i++) {
+                  if (this.wish[i]) {
+                    this.lists.push(this.wish[i])
+                  }
+                  console.log(this.lists)
                 }
-                console.log(this.lists)
-              }
-            } else {
-              for (let i = 0; i < this.PageSize; i++) {
-                if (this.wish[i]) {
-                  this.lists.push(this.wish[i])
+              } else {
+                for (let i = 0; i < this.PageSize; i++) {
+                  if (this.wish[i]) {
+                    this.lists.push(this.wish[i])
+                  }
                 }
               }
+              this.CurrentPageIndex += 1 // 页面+1
+              this.$nextTick(() => {
+                this._initScroll()
+              })
             }
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+     },
+    	reCeateDate(){
+    		//因为下拉要更新 所以不能引用上面的数据 要重新获取一次数据库数据才叫更新
+    		 IndexService.wishwall(this.CurrentPageIndex)
+        .then((response) => {
+          if (response.code === ERR_OK) {
+            this.wish = response.data
             this.CurrentPageIndex += 1 // 页面+1
             this.$nextTick(() => {
               this._initScroll()
@@ -331,45 +452,223 @@
         .catch((err) => {
           console.log(err)
         })
-    },
-    mounted () {
-
-    },
-    methods: {
-
-      _initScroll () {
-        this.rulesScroll = new BScroll(this.$refs.rulesText, {
-          hasVerticalScroll: true,
-          click: true,
-          bounce: true
+    	},
+    	ajaxdate(){
+        console.log('+1')
+        if(!this.postsuccess){
+          return
+        }
+        let  noneData = document.querySelector(".noneData");
+        if(this.noneDataNum==1){
+          noneData.style.display = "block"//显示没有数据了
+          return
+        }
+        this.postsuccess=false
+        IndexService.wishwall(this.CurrentPageIndex)
+        .then((response) => {
+          if (response.code === ERR_OK) {
+            this.postsuccess=true
+            if(response.data.length){
+              for(let i=0;i<response.data.length;i++){
+                 this.lists.push(response.data[i])
+                 console.log(this.lists)
+              }
+              this.CurrentPageIndex += 1 // 页面+1
+              this.$nextTick(() => {
+                this._initScroll()
+              })
+              this.scrollY = this.contScroll.startY;
+            }else{
+              noneData.style.display = "block"
+              this.noneDataNum = 1;
+              return;
+            }
+            this.$nextTick(() => {
+              this._initScroll()
+            })
+          }
         })
+        .catch((err) => {
+          console.log(err)
+        })
+    	},
+			init(event){
+        // event.stopPropagation()
+//				document.getElementById("dd").addEventListener("scroll",function(){alert("we");})
+				let content = document.getElementsByClassName("content")[0]
+				let contWrapper = document.getElementsByClassName("contWrapper")[0]
+				let updateText  = document.getElementsByClassName("updateText")[0]
+				let downloadText  = document.getElementsByClassName("downloadText")[0]
+				let _this = this;
+				let pullFlag = 0 ;//代理
+
+        	// updateText.style.display = "none";
+					// downloadText.style.display = "none";
+				//监听开始触摸事件
+				// content.addEventListener('touchstart',function(event){
+        //   event.stopPropagation()
+				// 	updateText.style.display = "none";
+				// 	downloadText.style.display = "none";
+				// })
+				//监听触摸过程事件
+			  content.addEventListener('touchmove',function(event){
+          event.stopPropagation()
+			  	//阻止浏览器默认事件
+			  	// event.preventDefault()
+			  	//获取当前滚动的位置
+
+			  	let pullNum = contWrapper.style.transform.substring(contWrapper.style.transform.indexOf(", ")+1,contWrapper.style.transform.indexOf("px)"));
+			  		let scrollContainer = contWrapper.offsetHeight/2;
+			  		console.log(scrollContainer);
+
+			  		 // 如果这个元素的位置内只有一个手指的话
+    				if(event.targetTouches.length == 1) {
+    				  //下拉大于30更新
+    					   if(pullNum>30){
+    					   		pullFlag = 1
+    					   		updateText.style.display = "block";
+    					   }
+    					   //下拉到底部加载
+    					   if(Math.abs( pullNum)>=Math.abs(_this.contScroll.maxScrollY)){
+    					  		pullFlag = 2
+
+    					  		if(_this.noneDataNum==0){
+    					   			downloadText.style.display = "block";
+    					   	}
+    					   }
+
+    				}
+
+			  });
+			  //监听结束事件
+			  content.addEventListener('touchend',function(){
+			  	if(pullFlag==1){
+			  		//下面全部数据还原（下拉更新）  //--------
+			  		document.querySelector(".noneData").style.display = "none";
+			  		pullFlag=0;
+			  		_this.lists=[]
+			  		_this.CurrentPageIndex = 1;
+			  		_this.reCeateDate();
+			  		_this.scrollY=0;
+			  		_this.noneDataNum = 0 ;
+					 	_this.$nextTick(() => {
+             _this._initScroll()
+            })
+            //--------
+			  		updateText.style.display = "none";
+			  	}
+			  	else if(pullFlag==2){
+			  			downloadText.style.display = "none";
+			  		 	_this.ajaxdate();
+			  		 	pullFlag=0;
+			  		 }
+			  });
+			  //监听取消事件
+			   content.addEventListener('touchcancel',function(){
+			  	if(pullFlag==1){
+			  		//下面全部数据还原（下拉更新）  //--------
+			  		document.querySelector(".noneData").style.display = "none";
+			  		pullFlag=0;
+			  		_this.lists=[]
+			  		_this.CurrentPageIndex = 1;
+			  		_this.reCeateDate();
+			  		_this.scrollY=0;
+			  		_this.noneDataNum = 0 ;
+					 	_this.$nextTick(() => {
+             _this._initScroll()
+            })
+            //--------
+			  		updateText.style.display = "none";
+			  	}
+			  	else if(pullFlag==2){
+			  			downloadText.style.display = "none";
+			  		 	_this.ajaxdate();
+			  		 	pullFlag=0;
+			  		 }
+			  });
+      	this.touchStart("title",0);
+      	this.touchStart("wishFooter",0);
+			}
+			,
+      _initScroll () {
         this.contScroll = new BScroll(this.$refs.contWrapper, {
           hasVerticalScroll: true,
           click: true,
-          bounce: true
+          bounce: true,
+          startY:this.scrollY
         })
       },
-      changeHeart (index) {
-        this.wish[index].heartNum = !this.wish[index].heartNum
-        if (this.wish[index].heartNum) {
-          this.wish[index].praiseNum ++
-          alert('aaa')
-        } else if (!this.wish[index].heartNum) {
-          this.wish[index].praiseNum --
-          alert('bbb')
-        }
-        this.$set(this.wish)
+       is_weixin(){
+          var ua = navigator.userAgent.toLowerCase();
+          if(ua.match(/MicroMessenger/i)=="micromessenger") {
+             this.weixinStatus = true;
+             let code = this.GetQueryString('code')
+              IndexService.getuserinfo(code)
+              .then((recvdata)=>{
+                  if(recvdata.code==200){
+                    this.nickName = recvdata.data.nickName
+                    this.headUrl = recvdata.data.headImgUrl
+                  }
+              })
+          } else {
+              this.weixinStatus = false;
+          }
       },
+      GetQueryString(name){
+          var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+          var r = window.location.search.substr(1).match(reg);
+          if(r != null) return unescape(r[2])
+          return null
+      },
+      changeHeart (index) {
+        console.log(index)
+        console.log(this.lists)
+        this.lists[index].heartNum = !this.lists[index].heartNum
+        let data={}
+        if (this.lists[index].heartNum) {
+          this.lists[index].praiseNum ++
+          if(this.weixinStatus){
+            data={
+              id:this.lists[index].id,
+              channel:2,
+              headUrl:this.headUrl,
+              nickName:this.nickName,
+            }
+          }else{
+            data={
+              id:this.lists[index].id,
+              userId:this.GetQueryString('userId'),
+              channel:1,
+            }
+          }
+          IndexService.praise(data)
+          .then((recvdata)=>{
+
+          })
+        } else if (!this.lists[index].heartNum) {
+          this.lists[index].praiseNum --
+          IndexService.praise(data)
+          .then((recvdata)=>{
+
+          })
+        }
+        this.$set(this.lists)
+
+      }
+      ,
       pubWish () {
         this.$router.push({path: '/pubWish'})
+
       },
       showRules () {
         this.rulesShow = true
+        console.log(this.rulesShow)
       },
       hideRules () {
         this.rulesShow = false
       },
       down () {
+
         this.$refs.scroll.addEventListener({
           name: 'scrolltobottom',
           extra: {
@@ -378,7 +677,7 @@
         })
       }
     },
-    compoents: {
+    components: {
       'v-scroll': Scroll
     }
   }

@@ -14,7 +14,6 @@
     top: 0;
     left: 0;
     width: rem(529);
-    animation: start 1.5s ease-out infinite;
   }
   .page2 >div:nth-child(1){
     width: rem(547);
@@ -24,7 +23,6 @@
     font-size: rem(41);
     color: #5e2900;
     padding: rem(90) 0;
-    animation: fadeInUp 0.6s ease-in;
     position: absolute;
     top: rem(131);
     left: 0;
@@ -33,6 +31,7 @@
   .page2 >div:nth-child(1) p{
     display: none;
   }
+
   .page2Lamp{
     width: rem(343);
     height: rem(243);
@@ -58,8 +57,8 @@
   @-webkit-keyframes fadeInUp {
     from {
       opacity: 0;
-      -webkit-transform: translate3d(0, 20%, 0);
-      transform: translate3d(0, 20%, 0);
+      -webkit-transform: translate3d(0, 10%, 0);
+      transform: translate3d(0, 10%, 0);
 
     }
 
@@ -74,8 +73,8 @@
   @keyframes fadeInUp {
     from {
       opacity: 0;
-      -webkit-transform: translate3d(0, 20%, 0);
-      transform: translate3d(0, 20%, 0);
+      -webkit-transform: translate3d(0, 10%, 0);
+      transform: translate3d(0, 10%, 0);
 
     }
 
@@ -105,8 +104,8 @@
       opacity: 1;
     }
   }
-  .fadeIn{
-    animation: fadeIn 0.4s ease 0s;
+  .cloud1,.cloud{
+    display: none;
   }
 </style>
 <template>
@@ -126,33 +125,3 @@
       </div>
   </div>
 </template>
-<script type="text/ecmascript-6">
-  export default {
-    data () {
-      return {
-
-      }
-    },
-    mounted () {
-      this.animate2()
-    },
-    methods: {
-      animate2 () {
-        let ps = document.getElementsByClassName('cloud1')
-        for (let i = 0; i < ps.length; i++) {
-          setTimeout(function () {
-            ps[i].style.display = 'block'
-            ps[i].classList.add('fadeIn')
-          }, i * 500)
-        }
-        setTimeout(function () {
-          for (var i = 0; i < ps.length; i++) {
-            ps[i].classList.remove('fadeIn')
-          }
-        }, 1500)
-      }
-    }
-  }
-
-</script>
-

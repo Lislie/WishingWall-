@@ -50,9 +50,9 @@
         top: rem(20);
         left: 0;
         z-index: 1;
-        animation: carpet 1.5s linear infinite;
-        animation-direction:alternate;
+       
       }
+     
       img:nth-child(2){
         width:66%;
         height:auto;
@@ -62,9 +62,7 @@
         position: absolute;
       }
     }
-    .flipY{
-      animation: flipY 3s ease-in-out;
-    }
+    
     h1{
       font-weight: normal;
       margin-top: rem(53);
@@ -89,16 +87,16 @@
       from{-webkit-transform: perspective(400px) rotate3d(0, 1, 0, 0deg);
         transform: perspective(400px) rotate3d(0, 1, 0, 0deg);}
       to{
-        -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 3600deg);
-        transform: perspective(400px) rotate3d(0, 1, 0, 3600deg);
+        -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 1800deg);
+        transform: perspective(400px) rotate3d(0, 1, 0, 1800deg);
       }
     }
     @keyframes flipY {
       from{-webkit-transform: perspective(400px) rotate3d(0, 1, 0, 0deg);
         transform: perspective(400px) rotate3d(0, 1, 0, 0deg);}
       to{
-        -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 3600deg);
-        transform: perspective(400px) rotate3d(0, 1, 0, 3600deg);
+        -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 1800deg);
+        transform: perspective(400px) rotate3d(0, 1, 0, 1800deg);
       }
     }
 
@@ -143,7 +141,7 @@
   <div class="page3">
     <p>国际知名行程规划师<br />为您量身定制行程</p>
     <div class="photo">
-      <img id="photo" src="./page3_photo.png" class="flipY">
+      <img id="photo" src="./page3_photo.png">
     </div>
     <div class="carpet">
       <img id="carpetImg" src="./page3_carpet.png" />
@@ -155,9 +153,3 @@
   </div>
 
 </template>
-
-<script type="text/ecmascript-6">
-
-  export default {}
-
-</script>
