@@ -224,7 +224,7 @@
               channel:2,
               headUrl:this.headImgUrl,
               nickName:this.nickName,
-              id:this.id
+              id:this.id,
             }
             IndexService.praise(data)
             .then((recvdata)=>{
@@ -248,7 +248,9 @@
           let data ={
               channel:1,
               userId:userid,
-              id:this.id
+              id:this.id,
+              headUrl:'',
+              nickName:''
             }
             IndexService.praise(data)
             .then((recvdata)=>{

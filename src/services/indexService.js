@@ -53,7 +53,7 @@ class IndexService {
         method:'post',
         body:{
           id:data.id,
-          userId:data.userId,
+          userId:'123',
           channel:data.channel,
           headUrl:data.headUrl,
           nickName:data.nickName,

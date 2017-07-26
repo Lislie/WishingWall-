@@ -53,11 +53,11 @@
       .lists
         float left
         position
-
-        margin-right rem(10)
+        margin-left rem(10)
         &:nth-child(even)
-          float right
-        &:nth-child(1)
+          float left
+          margin-right rem(20)
+        &:nth-child(2)
           position relative
           &:before
             content ""
@@ -68,7 +68,7 @@
             background-image url("皇冠.png")
             background-size 100%
             left rem(60)
-        &:nth-child(2)
+        &:nth-child(3)
           position relative
           &:before
             content ""
@@ -408,7 +408,7 @@
       loadData(){
         // 设置一个开关来避免重负请求数据
         // axios.get('http://101.251.240.134:8080/wish/api/v1/wish')
-        IndexService.wishwall(this.CurrentPageIndex,'fc3825e6-b05c-486e-8ac0-a1212949d001','oHSNYwK0DNBLRf6ts3qbzzedILDQ','2')
+        IndexService.wishwall(this.CurrentPageIndex,'fc3825e6-b05c-486e-8ac0-a1212949d001','ev2gagbvibnkamhjoxdnjf','1')
           .then((response) => {
             console.log(response)
             if (response.code === ERR_OK) {
@@ -425,7 +425,7 @@
         console.log(1)
         this.CurrentPageIndex=1
         //因为下拉要更新 所以不能引用上面的数据 要重新获取一次数据库数据才叫更新
-        IndexService.wishwall(this.CurrentPageIndex)
+        IndexService.wishwall(this.CurrentPageIndex,'fc3825e6-b05c-486e-8ac0-a1212949d001','ev2gagbvibnkamhjoxdnjf','1')
           .then((response) => {
             if (response.code === ERR_OK) {
               this.wish = response.data
@@ -523,6 +523,8 @@
               id:this.lists[index].id,
               userId:this.GetQueryString('userId'),
               channel:1,
+              headUrl:'',
+              nickName:''
             }
           }
           IndexService.praise(data)
@@ -543,6 +545,8 @@
               id:this.lists[index].id,
               userId:this.GetQueryString('userId'),
               channel:1,
+              headUrl:'',
+              nickName:''
             }
           }
           IndexService.praise(data)

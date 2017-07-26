@@ -22,8 +22,10 @@
 
       }
     },
-    created () {
-      this.init()
+    mounted () {
+      this.$nextTick(
+        this.init()
+      )
     },
     methods: {
       init () {
