@@ -435,62 +435,8 @@
           .catch((err) => {
             console.log(err)
           })
-     },
-    	reCeateDate(){
-    		//因为下拉要更新 所以不能引用上面的数据 要重新获取一次数据库数据才叫更新
-    		 IndexService.wishwall(this.CurrentPageIndex)
-        .then((response) => {
-          if (response.code === ERR_OK) {
-            this.wish = response.data
-            this.CurrentPageIndex += 1 // 页面+1
-            this.$nextTick(() => {
-              this._initScroll()
-            })
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    	},
-    	ajaxdate(){
-        console.log('+1')
-        if(!this.postsuccess){
-          return
-        }
-        let  noneData = document.querySelector(".noneData");
-        if(this.noneDataNum==1){
-          noneData.style.display = "block"//显示没有数据了
-          return
-        }
-        this.postsuccess=false
-        IndexService.wishwall(this.CurrentPageIndex)
-        .then((response) => {
-          if (response.code === ERR_OK) {
-            this.postsuccess=true
-            if(response.data.length){
-              for(let i=0;i<response.data.length;i++){
-                 this.lists.push(response.data[i])
-                 console.log(this.lists)
-              }
-              this.CurrentPageIndex += 1 // 页面+1
-              this.$nextTick(() => {
-                this._initScroll()
-              })
-              this.scrollY = this.contScroll.startY;
-            }else{
-              noneData.style.display = "block"
-              this.noneDataNum = 1;
-              return;
-            }
-            this.$nextTick(() => {
-              this._initScroll()
-            })
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    	},
+        },
+      // this.wish.push(this.wish[0])
 			init(event){
         // event.stopPropagation()
 //				document.getElementById("dd").addEventListener("scroll",function(){alert("we");})
