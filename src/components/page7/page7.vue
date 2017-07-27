@@ -104,26 +104,26 @@
 
   }
   .tost{
-  	position: absolute;
-  	top: 40%;
-  	color: #F8CB0C;
-  	font-size: 25px;
-  	opacity: 0;
-
-  	transform: translateX(-50%);
-  	-webkit-transform: translateX(-50%);
-  	left:-100%;
-  	transition:all  linear 1s ;
-  	-webkit-transition: all  linear 1s ;
+    position: absolute;
+    top: 40%;
+    color: #F8CB0C;
+    font-size: 25px;
+    opacity: 0;
+    width: 100%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    left:-100%;
+    transition:all  linear 1s ;
+    -webkit-transition: all  linear 1s ;
   }
 
 </style>
 
 <template>
   <div class="page7">
-  	<div class="tost">qweqw</div>
+  	<div class="tost"></div>
     <h1>写下您的旅行愿望</h1>
-    <textarea placeholder="请写下您的旅行愿望~" v-model="wishText"></textarea>
+    <textarea placeholder="请写下您的旅行愿望~" v-model="wishText" v-on:blur="checkWish" id="getFocus"></textarea>
     <div class="getCode">
       <input type="tel" placeholder="请输入手机号"  v-model="phoneText" >
       <input type="button" value="获取验证码"  @click="getCode" class="btnCode"  />
@@ -165,17 +165,6 @@
 
     },
     created () {
-//      let qr = this.GetQueryString("code");
-//      if( qr!=null && qr!=undefined){
-//        this.getName(qr);
-//      }else{
-//        let link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx49b89597e8b4f7a8" +
-//          "&redirect_uri="+window.location.href +
-//          "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
-//        console.log(link)
-//        window.location.href = link;
-//      }
-
         this.is_weixin()
 
     },
@@ -230,43 +219,35 @@
         }
       },
       postWish () {
-        //  this.$router.push({path: '/postWish'})
-      		let tost = document.getElementsByClassName("tost")[0];
-      	//判断心愿不能为空
-      	if(this.wishText==""){
-      		tost.innerText="心愿不能为空";
-		    	tost.style.opacity = 1;
-		    	tost.style.left = "50%";
-    	    this.timerLeave();
-      		 return false;
-      	}
+        let _this = this;
+        let tost = document.getElementsByClassName("tost")[0];
+        //判断心愿不能为空
+
         if(this.wishText.length<15){
-      		tost.innerText="心愿不能低于15个字";
-		    	tost.style.opacity = 1;
-		    	tost.style.left = "50%";
-    	    this.timerLeave();
-      		 return false;
-      	}
-      	//判断手机号码不能为空
-      	if(this.phoneText==""){
+          this.enterTost("心愿不能少于15字哦",3000)
+          setTimeout(function(){
+            let getFocus = document.getElementById("getFocus");
+            getFocus.focus();
+          },3000);
+          return false;
+        }
+//    	//判断手机号码不能为空
+        if(this.phoneText==""){
 
-      			tost.innerText="请输入手机号";
-			    	tost.style.opacity = 1;
-			    	tost.style.left = "50%";
-			    	this.timerLeave();
-			    	 return false;
-      	}
-      	//验证手机号是否正确
-      	 if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(this.phoneText))){
+          _this.enterTost("请输入手机号",2000);
+          return false;
+        }
+//    	//验证手机号是否正确
+        if(!(/^1[34578]\d{9}$/.test(this.phoneText))){
+          _this.enterTost("请输入正确的手机号码",2000);
 
-        	tost.innerText="请输入正确的手机号码";
-		    	tost.style.opacity = 1;
-		    	tost.style.left = "50%";
-    	    this.timerLeave();
-        return false;
+          return false;
 
-    	}
-
+        }
+        if(!(/^\d{6}$/.test(this.phoneCode))){
+          _this.enterTost("验证码为6位数字",2000);
+          return false;
+        }
 
     //if(!( this.phoneText==手机短信验证码对应的手机号&&this.phoneCode==对应的验证码)){ //这2个数据是数据库请求回来的
     	//alert("验证码不正确！");
@@ -349,27 +330,20 @@
     },
     getCode(){
 
-    	let btnCode = document.getElementsByClassName("btnCode")[0];
-    	let tost = document.getElementsByClassName("tost")[0];
-      	//判断手机号码不能为空
-      	if(this.phoneText==""){
+      let _this = this;
 
-      			tost.innerText="请输入手机号";
-			    	tost.style.opacity = 1;
-			    	tost.style.left = "50%";
-			    	this.timerLeave();
-			    	 return false;
-      	}
-      	//验证手机号是否正确
-      	 if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(this.phoneText))){
+      let btnCode = document.getElementsByClassName("btnCode")[0];
+      if(this.phoneText.length<=0){
 
-        	tost.innerText="请输入正确的手机号码";
-		    	tost.style.opacity = 1;
-		    	tost.style.left = "50%";
-    	    this.timerLeave();
+        _this.enterTost("请输入手机号",2000);
         return false;
+      }
 
-    	}
+      if(!(/^1[34578]\d{9}$/.test(this.phoneText))){
+        _this.enterTost("请输入正确的手机号");
+        return false;
+      }
+      let tost = document.getElementsByClassName("tost")[0];
       IndexService.sendcode('86,'+this.phoneText)
       .then((recvdata)=>{
         console.log(recvdata)
@@ -399,6 +373,36 @@
         }
       })
     },
+      checkWish(){
+        if(this.wishText.length<15){
+          this.enterTost("心愿不能少于15字以上哦",3000)
+          setTimeout(function(){
+            let getFocus = document.getElementById("getFocus");
+            getFocus.focus();
+          },3000);
+          return 0;
+        }
+      },
+      leaveTost(){
+        let tost = document.getElementsByClassName("tost")[0];
+        if(tost){
+          tost.style.opacity = 0;
+          tost.style.left = "-100%";
+        }
+
+      },
+      enterTost(text,timer){
+        let tost = document.getElementsByClassName("tost")[0];
+        if(tost){
+          tost.innerText=text;
+          tost.style.opacity = 1;
+          tost.style.left = "50%";
+          setTimeout(()=>{
+            this.leaveTost();
+          },timer||3000)
+        }
+      }
+      ,
     timerLeave(){
     	setTimeout(()=>{
     		this.leaveTost();

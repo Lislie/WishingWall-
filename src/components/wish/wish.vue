@@ -248,12 +248,27 @@
     -ms-overflow-style:none;
     overflow:-moz-scrollbars-none;
   }
+  .tost{
+    position: absolute;
+    top: 40%;
+    color: #F8CB0C;
+    font-size: 25px;
+    opacity: 0;
+
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    left:-100%;
+    transition:all  linear 1s ;
+    -webkit-transition: all  linear 1s ;
+    z-index: 100;
+  }
   /*html::-webkit-scrollbar{width:0px}*/
   ::-webkit-scrollbar {width: 0px;height: 1px;}
   ::-webkit-scrollbar-thumb {border-radius: 5px;-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);background: rgba(0, 0, 0, 0.2);}
 </style>
 <template>
   <div id="wishList">
+    <div class="tost"></div>
     <header class="wishHeader">
       <div class="title">
         <h1 class="listTitle">心愿墙</h1>
@@ -283,7 +298,7 @@
                 </div>
                 <div class="listFoot">
                   <div class="heartWrapper">
-                    <span :class="item.heartNum?'heart':'heartShow'" @click="changeHeart(index)"></span>
+                    <span :class="item.heartNum?'heart':'heartShow'" @click="clickGood()"></span>
                     <span class="heartNum">{{item.praiseNum}}</span></div>
                 </div>
               </li>
@@ -358,7 +373,9 @@
         nickName:'',
         headUrl:'',
         loading_show:false,
-        userId:''
+        userId:'',
+        id:'',
+        heartNum:Boolean
       }
     },
     created () {
@@ -453,6 +470,7 @@
         this.loading_show = true
         IndexService.wishwall(this.CurrentPageIndex,'fc3825e6-b05c-486e-8ac0-a1212949d001','oHSNYwK0DNBLRf6ts3qbzzedILDQ','2')
           .then((response) => {
+            console.log(response)
             let _this =this
             setTimeout(function(){
               _this.loading_show = false
@@ -557,6 +575,62 @@
         this.$set(this.lists)
       }
       ,
+      clickGood(){
+        //调用后台接口获取打开链接的OpenID，然后记录，此人已经为这个用户点赞过了，避免同一个人重复点赞
+        //然后只要这个人的点赞字段+1就行了
+        var tost = document.getElementsByClassName("tost")[0];
+        if(this.weixinStatus){
+          let data ={
+            channel:2,
+            headUrl:this.headImgUrl,
+            nickName:this.nickName,
+            id:this.id,
+          }
+          IndexService.praise(data)
+            .then((recvdata)=>{
+              if(recvdata.code==200){
+                this.loadData()
+                tost.innerText="点赞成功";
+                tost.style.opacity = 1;
+                tost.style.left = "50%";
+                this.timerLeave();
+                return false;
+              }else{
+                tost.innerText=recvdata.msg;
+                tost.style.opacity = 1;
+                tost.style.left = "50%";
+                this.timerLeave();
+                return false;
+              }
+            })
+        }else{
+          let userid = this.GetQueryString('userId')
+          let data ={
+            channel:1,
+            userId:userid,
+            id:this.id,
+            headUrl:'',
+            nickName:''
+          }
+          IndexService.praise(data)
+            .then((recvdata)=>{
+              if(recvdata.code==200){
+                this.loadData()
+                tost.innerText="点赞成功";
+                tost.style.opacity = 1;
+                tost.style.left = "50%";
+                this.timerLeave();
+                return false;
+              }else{
+                tost.innerText=recvdata.msg;
+                tost.style.opacity = 1;
+                tost.style.left = "50%";
+                this.timerLeave();
+                return false;
+              }
+            })
+        }
+      },
       pubWish () {
         this.$router.push({path: '/pubWish'})
       },

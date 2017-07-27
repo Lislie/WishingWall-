@@ -108,7 +108,7 @@
 </style>
 <template>
   <div class="page5">
-    <div class="tost">qweqw</div>
+    <div class="tost"></div>
     <header class="headPage5">
       <h3 class="headH3">您的小伙伴{{wish.nickname}}正在参与写心愿送机票的活动快来帮他点赞</h3>
     </header>
