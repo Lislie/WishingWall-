@@ -52,7 +52,7 @@ class IndexService {
         url:'praise',
         method:'post',
         body:{
-          id:'fc3825e6-b05c-486e-8ac0-a1212949d031',
+          id:data.id,
           userId:'ev2gagbvibnkamhjoxdnjf',
           channel:data.channel,
           headUrl:data.headUrl,

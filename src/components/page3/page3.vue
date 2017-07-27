@@ -2,7 +2,7 @@
   @import '../../assets/styl/rem.styl'
   .page3{
     width: 100%;
-    height 100%;
+    height rem(1334)
     color: #f8cb0c;
     text-align: center;
     background: url("page3_bg.png") no-repeat center;

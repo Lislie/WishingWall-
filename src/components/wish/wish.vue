@@ -1,7 +1,6 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
   @import '../../assets/styl/rem.styl'
-
   #wishList
     overflow:hidden
     width 100%
@@ -51,9 +50,8 @@
         left rem(280)
         overflow scroll
       .lists
-        float left
+        height 100%
         position
-        margin-left rem(10)
         &:nth-child(even)
           float left
           margin-right rem(20)
@@ -78,7 +76,7 @@
             position absolute
             background-image url("银冠.png")
             background-size 100%
-            left rem(60)
+            right rem(205)
         .rangKing:first-of-type
           position absolute
           width 100%
@@ -95,7 +93,6 @@
             right  0
         .list
           width rem(332)
-          height rem(472)
           overflow  hidden
           margin-bottom rem(20)
           border-radius rem(20)
@@ -111,16 +108,25 @@
               border-radius 50%
               float left
             .wishName
+              width 100%
               font-size rem(26)
+              margin-bottom rem(20)
             .wishTime
-              margin-top rem(10)
-              font-style: rem(24)
+              width rem(400)
+              font-size rem(24)
+              text-align left
+
           .listContainer
-            margin-top rem(20)
+            margin-top rem(25)
             display:block;
             overflow:hidden;
             text-align left
             text-overflow:ellipsis;
+            white-space:wrap;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 6;
+
           font-size rem(28)
           .listFoot
             height rem(80)
@@ -262,6 +268,13 @@
     -webkit-transition: all  linear 1s ;
     z-index: 100;
   }
+  .clearfix:after,.clearfix:before{
+    content: '';
+    display: table;
+  }
+  .clearfix:after{
+    clear: both;
+  }
   /*html::-webkit-scrollbar{width:0px}*/
   ::-webkit-scrollbar {width: 0px;height: 1px;}
   ::-webkit-scrollbar-thumb {border-radius: 5px;-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);background: rgba(0, 0, 0, 0.2);}
@@ -281,7 +294,7 @@
     <div class="updateText">正在更新数据...</div>
     <div>
       <div class="content" ref="contWrapper" v-on:touchmove="stopPropagation($event)">
-        <div class="contWrapper" ref="scroll"
+        <div class="contWrapper clearfix" ref="scroll"
              v-infinite-scroll="loadMore"
              infinite-scroll-disabled="loading"
              infinite-scroll-distance="10">
@@ -290,15 +303,17 @@
               <li class="list" >
                 <div class="listHead">
                   <img :src='item.headUrl' alt="用户头像" class="wishImg">
-                  <h3 class="wishName">{{item.nickname}}</h3>
-                  <p class="wishTime">{{item.time | moment}}</p>
+                  <div class="listUser">
+                    <h3 class="wishName">{{item.nickname}}</h3>
+                    <p class="wishTime">{{item.time | moment}}</p>
+                  </div>
                 </div>
                 <div class="listContainer">
                   {{item.wish}}
                 </div>
                 <div class="listFoot">
                   <div class="heartWrapper">
-                    <span :class="item.heartNum?'heart':'heartShow'" @click="clickGood()"></span>
+                    <span :class="item.heartNum?'heart':'heartShow'" @click="clickGood(index)"></span>
                     <span class="heartNum">{{item.praiseNum}}</span></div>
                 </div>
               </li>
@@ -321,15 +336,15 @@
           <div class="textWrapper" ref="scroll"  >
             <div class="rulesTitle">活动规则</div>
             <div class="rulesList">
-              <h3>1.活动时间</h3>
+              <h3>1.活动时间:</h3>
               <p>2017.07.25 -- 2017.9.28</p>
             </div>
             <div class="rulesList">
-              <h3>2.参选条件</h3>
+              <h3>2.参选条件:</h3>
               <p>下载皮皮虾旅行App,进行报名并收集好友祝福</p>
             </div>
             <div class="rulesList">
-              <h3>3.参选规则</h3>
+              <h3>3.参选规则:</h3>
               <p class="rulesStar">点赞数排名第一，第二名，将获得机票+点赞数相应的积分数</p>
               <p class="rulesStar">点赞数排名第3~22名，将获得。。。+点赞相应的积分数</p>
               <p class="rulesStar">每位参与用户都将获得点赞数相应的积分数</p>
@@ -337,8 +352,8 @@
               <p class="rulesStar">请在活动截止后1个月内下载APP领取积分，逾期积分未领取，将视为放弃领取资格，积分失效~</p>
             </div>
             <div class="rulesList">
-              <h3>4.评选方式</h3>
-              <p>本场获得祝福最多用户票选</p>
+              <h3>4.评选方式:</h3>
+              <p>本场获得祝福最多用户投票评选</p>
             </div>
           </div>
         </div>
@@ -438,6 +453,18 @@
             console.log(err)
           })
       },
+//      loadData2(){
+//        axios.get('http://101.251.240.134:8080/wish/api/v1/wish/'+this.id)
+//          .then((response) => {
+//            if (response.data.code === ERR_OK) {
+//              this.wish = response.data.data
+//              console.log(this.wish)
+//            }
+//          })
+//          .catch((err) => {
+//            console.log(err)
+//          })
+//      },
       reCeateDate(){
         console.log(1)
         this.CurrentPageIndex=1
@@ -445,8 +472,9 @@
         IndexService.wishwall(this.CurrentPageIndex,'fc3825e6-b05c-486e-8ac0-a1212949d001','ev2gagbvibnkamhjoxdnjf','1')
           .then((response) => {
             if (response.code === ERR_OK) {
-              this.wish = response.data
+              this.lists = response.data
               this.CurrentPageIndex += 1 // 页面+1
+              this.noneDataNum = 0
             }
           })
           .catch((err) => {
@@ -468,7 +496,7 @@
         }
         this.postsuccess=false
         this.loading_show = true
-        IndexService.wishwall(this.CurrentPageIndex,'fc3825e6-b05c-486e-8ac0-a1212949d001','oHSNYwK0DNBLRf6ts3qbzzedILDQ','2')
+        IndexService.wishwall(this.CurrentPageIndex,'fc3825e6-b05c-486e-8ac0-a1212949d001','ev2gagbvibnkamhjoxdnjf','1')
           .then((response) => {
             console.log(response)
             let _this =this
@@ -525,7 +553,6 @@
         return null
       },
       changeHeart (index) {
-        this.lists[index].heartNum = !this.lists[index].heartNum
         let data={}
         if (this.lists[index].heartNum) {
           this.lists[index].praiseNum ++
@@ -575,7 +602,7 @@
         this.$set(this.lists)
       }
       ,
-      clickGood(){
+      clickGood(index){
         //调用后台接口获取打开链接的OpenID，然后记录，此人已经为这个用户点赞过了，避免同一个人重复点赞
         //然后只要这个人的点赞字段+1就行了
         var tost = document.getElementsByClassName("tost")[0];
@@ -584,15 +611,17 @@
             channel:2,
             headUrl:this.headImgUrl,
             nickName:this.nickName,
-            id:this.id,
+            id:this.lists[index].id,
           }
           IndexService.praise(data)
             .then((recvdata)=>{
               if(recvdata.code==200){
-                this.loadData()
+//                this.loadData()
                 tost.innerText="点赞成功";
+                this.lists[index].praiseNum++
                 tost.style.opacity = 1;
                 tost.style.left = "50%";
+                this.lists[index].heartNum = true
                 this.timerLeave();
                 return false;
               }else{
@@ -608,15 +637,17 @@
           let data ={
             channel:1,
             userId:userid,
-            id:this.id,
+            id:this.lists[index].id,
             headUrl:'',
             nickName:''
           }
           IndexService.praise(data)
             .then((recvdata)=>{
               if(recvdata.code==200){
-                this.loadData()
+//                this.loadData()
                 tost.innerText="点赞成功";
+                this.lists[index].praiseNum++
+                this.lists[index].heartNum = true
                 tost.style.opacity = 1;
                 tost.style.left = "50%";
                 this.timerLeave();
@@ -630,6 +661,16 @@
               }
             })
         }
+      },
+      leaveTost(){
+        var tost = document.getElementsByClassName("tost")[0];
+        tost.style.opacity = 0;
+        tost.style.left = "-100%";
+      },
+      timerLeave(){
+        setTimeout(()=>{
+          this.leaveTost();
+        },3000)
       },
       pubWish () {
         this.$router.push({path: '/pubWish'})
