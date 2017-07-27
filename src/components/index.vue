@@ -33,7 +33,7 @@
     },
     data(){
       return{
-        mySwiper:null
+        mySwiper:null,
       }
     },
     mounted() {
@@ -47,6 +47,7 @@
         this.mySwiper.slidePrev();
       },
       Init() {
+        let _this = this
         this.mySwiper = new Swiper('.swiper-container', {
           direction: 'vertical',
           loop: false,
@@ -97,6 +98,17 @@
             }
           },
           resetAmation(){
+            console.log("wozhix")
+            clearTimeout(this.intervalid1)
+            clearTimeout(this.intervalid2)
+            clearTimeout(this.intervalid3)
+            clearTimeout(this.intervalid4)
+            clearTimeout(this.intervalid5)
+            clearTimeout(this.intervalid6)
+            clearTimeout(this.intervalid7)
+            clearTimeout(this.intervalid8)
+            clearTimeout(this.intervalid9)
+
             $('#word3,#word1,#word2').removeClass('fadeInUp').hide()
             $("#lamp").removeClass('shake').hide()
             $("#cloud,#cloudSmall").removeClass('fadeIn1 fadeOut').hide()
@@ -108,38 +120,41 @@
           },
           page1Anmation(){
             $("#lamp").addClass('shake').show()
-            setTimeout(function () {
+            this.intervalid1 = setTimeout(function () {
+              $("#lamp").removeClass('shake')
               $("#cloudSmall").addClass('fadeIn1').show()
             }, 800)
-            setTimeout(function () {
-              $("#lamp").addClass('shake').show()
+            this.intervalid2 = setTimeout(function () {
+              $("#cloud").addClass('fadeIn2').show()
             }, 1800)
-            setTimeout(function () {
+            this.intervalid3 = setTimeout(function () {
               $("#lamp").removeClass('shake')
-              $("#cloud").addClass('fadeIn1').show()
-            }, 2600)
-            setTimeout(function () {
+//              $("#cloud").attr('class','fadeOut')
+            }, 2800)
+            this.intervalid4= setTimeout(function () {
               $("#lamp").removeClass('shake')
               $("#lamp").addClass('shake')
               $("#cloud").addClass('fadeOut')
               $("#alading").addClass('fadeIn3').show()
             }, 3600)
-            setTimeout(function () {
+            this.intervalid5 = setTimeout(function () {
               $("#cloud").hide()
-
-            }, 5600)
-            setTimeout(function () {
+              $("#alading").addClass('scaleBig').show()
+            }, 4300)
+            this.intervalid6 = setTimeout(function () {
+              $("#alading").removeClass('scaleBig')
               $("#alading").addClass('float')
-            }, 5000)
-            setTimeout(function () {
+            }, 7500)
+            this.intervalid7 = setTimeout(function () {
               $('#word3').addClass('fadeInUp').show()
-              setTimeout(function () {
-                $('#word2').addClass('fadeInUp').show()
-              }, 400)
-              setTimeout(function () {
-                $('#word1').addClass('fadeInUp').show()
-              }, 800)
+
             }, 5500)
+            this.intervalid8 = setTimeout(function () {
+              $('#word2').addClass('fadeInUp').show()
+            }, 5900)
+            this.intervalid9 = setTimeout(function () {
+              $('#word1').addClass('fadeInUp').show()
+            }, 6300)
           }
         })
       }
