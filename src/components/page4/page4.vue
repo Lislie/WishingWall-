@@ -156,12 +156,22 @@
         page4Show: false,
         id: '',
         userId: '',
-        url: ''
+        url:'',
+        wid:''
       }
     },
     created () {
-      // 设置一个开关来避免重负请求数据
-      //根据传过来的用户ID查找数据库的数据 就行了
+
+      let r = new Object()
+      if (url.indexOf("?") != -1) {
+        let str = url.substr(url.indexOf("?")+1)
+
+        let strs = str.split("&")
+        for ( let i = 0 ; i < strs.length ; i++) {
+          r[strs[i].split("=")[0]] = strs[i].split("=")[1]
+        }
+      }
+      console.log(r)
       this.id = this.$route.params.id
       console.log(this.id)
       /*let id = 'fc3825e6-b05c-486e-8ac0-a1212949d011'*/
@@ -178,48 +188,64 @@
       this.url = "http://www.etherchen.com/#/share/" + this.id
       const url = document.location.href
       const url2 = location.href.split('#')[0]
+      const link = "http://www.etherchen.com/#/share?wish="+this.$route.query.wid//分享的链接
+      console.log(link,url2,url)
       IndexService.signature(url2)
         .then((res) => {// 获得签名配置
-          let Data = res.data;
+          let Data = res.data
           console.log(Data)
+          let timestamp = Data.timestamp
+          let nonceStr = Data.nonceStr
+          let signature = Data.signature
           // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作
           wx.config({
             debug: true, // 开启调试模式,开发时可以开启
             appId: 'wxd934d895968c256e',   // 必填，公众号的唯一标识   由接口返回
-            timestamp: Data.timestamp, // 必填，生成签名的时间戳 由接口返回
-            nonceStr: Data.nonceStr,    // 必填，生成签名的随机串 由接口返回
-            signature: Data.signature,   // 必填，签名 由接口返回
+            timestamp: timestamp, // 必填，生成签名的时间戳 由接口返回
+            nonceStr: nonceStr,    // 必填，生成签名的随机串 由接口返回
+            signature: signature,   // 必填，签名 由接口返回
             jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'] // 此处填你所用到的方法
           })
+          wx.error(function (res) {
+            alert("config配置错误")
+          })
+          wx.ready(() => {
+            wx.onMenuShareAppMessage({
+              title: '琛的测试页面', // 分享标题
+              desc: '试试看行不行？', // 分享描述
+              link: link, // 分享链接
+              imgUrl: 'http://tvax4.sinaimg.cn/crop.0.24.1242.1242.180/7ca780bely8fggcd26rdej20yi0zvwh7.jpg', // 分享图标
+              type: '', // 分享类型,music、video或link，不填默认为link
+              dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+              success: function () {
+                // 用户确认分享后执行的回调函数
+                alert('欢迎进入琛的页面')
+              },
+              cancel: function () {
+                // 用户取消分享后执行的回调函数
+                alert('早点滚')
+              }
+            })
+            wx.onMenuShareTimeline({
+              title: shareTitle, // 分享标题
+              imgUrl: imgUrl, // 分享图标
+              success: function () {
+                // 用户确认分享后执行的回调函数
+              },
+              cancel: function () {
+                // 用户取消分享后执行的回调函数
+              }
+            })
+          })
+
+
         })
-      wx.ready(() => {
-        wx.onMenuShareAppMessage({
-          title: '琛的测试页面', // 分享标题
-          desc: '试试看行不行？', // 分享描述
-          link: this.url, // 分享链接
-          imgUrl: 'http://tvax4.sinaimg.cn/crop.0.24.1242.1242.180/7ca780bely8fggcd26rdej20yi0zvwh7.jpg', // 分享图标
-          type: '', // 分享类型,music、video或link，不填默认为link
-          dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-          success: function () {
-            // 用户确认分享后执行的回调函数
-            alert('欢迎进入琛的页面')
-          },
-          cancel: function () {
-            // 用户取消分享后执行的回调函数
-            alert('早点滚')
-          }
+        .catch((err) => {
+          console.log(err)
         })
-        wx.onMenuShareTimeline({
-          title: shareTitle, // 分享标题
-          imgUrl: imgUrl, // 分享图标
-          success: function () {
-            // 用户确认分享后执行的回调函数
-          },
-          cancel: function () {
-            // 用户取消分享后执行的回调函数
-          }
-        })
-      })
+
+
+
     },
     methods: {
       invite()
@@ -253,7 +279,7 @@
                 }
               })
           } else {
-            var link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx49b89597e8b4f7a8" + "&redirect_uri=" + window.location.href + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+             let link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd934d895968c256e" + "&redirect_uri=" + window.location.href + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
             window.location.href = link
           }
         } else {

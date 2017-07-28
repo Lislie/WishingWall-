@@ -115,18 +115,12 @@
               width rem(400)
               font-size rem(24)
               text-align left
-
           .listContainer
             margin-top rem(25)
             display:block;
             overflow:hidden;
             text-align left
-            text-overflow:ellipsis;
-            white-space:wrap;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 6;
-
+            word-wrap:break-word
           font-size rem(28)
           .listFoot
             height rem(80)
@@ -539,7 +533,7 @@
                 }
               })
           }else{
-            var link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx49b89597e8b4f7a8"+"&redirect_uri="+window.location.href +"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+            var link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd934d895968c256e"+"&redirect_uri="+window.location.href +"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
             window.location.href = link;
           }
         } else {

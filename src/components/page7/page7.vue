@@ -202,7 +202,7 @@
                 }
               })
           }else{
-            var link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx49b89597e8b4f7a8"+"&redirect_uri="+window.location.href +"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+            var link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd934d895968c256e"+"&redirect_uri="+window.location.href +"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
             window.location.href = link;
           }
         } else {
@@ -222,9 +222,17 @@
         let _this = this;
         let tost = document.getElementsByClassName("tost")[0];
         //判断心愿不能为空
+        if(this.wishText.length = ''){
+          this.enterTost('请写下您的心愿哦~',3000)
+          setTimeout(function(){
+            let getFocus = document.getElementById("getFocus");
+            getFocus.focus();
+          },3000);
+          return false;
+        }
 
         if(this.wishText.length<15){
-          this.enterTost("心愿不能少于15字哦",3000)
+          this.enterTost("心愿要写够15字以上才能实现哦~",3000)
           setTimeout(function(){
             let getFocus = document.getElementById("getFocus");
             getFocus.focus();
@@ -234,7 +242,7 @@
 //    	//判断手机号码不能为空
         if(this.phoneText==""){
 
-          _this.enterTost("请输入手机号",2000);
+          _this.enterTost("请写下您的手机好哦~",2000);
           return false;
         }
 //    	//验证手机号是否正确
@@ -272,7 +280,7 @@
                 nickName:this.nickName,
                 headUrl:this.headImgUrl,
                 channel:'2',
-                userId:'oHSNYwK0DNBLRf6ts3qbzzedILDQ'
+                userId:this.openId?this.opId:'oHSNYwK0DNBLRf6ts3qbzzedILDQ'
               }
               console.log('weixin')
               IndexService.sendWish(datasave)
@@ -291,7 +299,7 @@
             }else{
               console.log('ppx')
                 let datasave = {
-                  userId:'ev2gagbvibnkamhjoxdnjf',
+                  userId:this.userId?this.userId:'ev2gagbvibnkamhjoxdnjf',
                   wish:this.wishText,
                   mobile:'86,'+this.phoneText,
                   channel:'1',

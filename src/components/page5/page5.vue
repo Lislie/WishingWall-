@@ -189,7 +189,7 @@
                 }
               })
           }else{
-            var link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx49b89597e8b4f7a8"+"&redirect_uri="+window.location.href +"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+            var link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd934d895968c256e"+"&redirect_uri="+window.location.href +"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
             window.location.href = link;
           }
         } else {

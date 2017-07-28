@@ -203,7 +203,7 @@
           title: '琛的测试页面', // 分享标题
           desc: '试试看行不行？', // 分享描述
           link: this.url, // 分享链接
-          imgUrl: 'http://tvax4.sinaimg.cn/crop.0.24.1242.1242.180/7ca780bely8fggcd26rdej20yi0zvwh7.jpg', // 分享图标
+          imgUrl:'http://tvax4.sinaimg.cn/crop.0.24.1242.1242.180/7ca780bely8fggcd26rdej20yi0zvwh7.jpg', // 分享图标
           type: '', // 分享类型,music、video或link，不填默认为link
           dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
           success: function () {
