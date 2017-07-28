@@ -3,7 +3,7 @@
   .page5
     width 100%
     height 100%
-    background-image url("背景3.png")
+    background-image url("http://img.ppx.easyto.com/images/wish/page5/背景3.png")
     background-size 100%
     .headPage5
       width 100%
@@ -124,7 +124,7 @@
         </div>
       </div>
       <div class="page5Heart" @click='clickGood()'>
-        <img src="./爱心-拷贝-4.png" class="bigHeart">
+        <img src="http://img.ppx.easyto.com/images/wish/page5/爱心-拷贝-4.png" class="bigHeart">
         <p class="heartNum">{{wish.praiseNum}}</p>
       </div>
     </div>
@@ -135,7 +135,7 @@
       </div>
       <div class="page5ma">
         <p>扫描二维码，下载皮皮虾旅行哦</p>
-        <img src="./二维码.png" alt="">
+        <img src="http://img.ppx.easyto.com/images/wish/page5/二维码.png" alt="">
       </div>
     </footer>
   </div>
@@ -153,7 +153,7 @@
         rulesShow: false,
         id:'',
         weixinStatus:false,
-        nickName:'',
+        nickname:'',
         headImgUrl:'',
         userId:''
       }
@@ -232,6 +232,8 @@
                     this.loadData()
                     tost.innerText="点赞成功";
                     tost.style.opacity = 1;
+                    this.lists[index].praiseNum++
+                    this.lists[index].heartNum = true
                     tost.style.left = "50%";
                     this.timerLeave();
                     return false;
@@ -258,6 +260,8 @@
                     this.loadData()
                     tost.innerText="点赞成功";
                     tost.style.opacity = 1;
+                    this.lists[index].praiseNum++
+                    this.lists[index].heartNum = true
                     tost.style.left = "50%";
                     this.timerLeave();
                     return false;

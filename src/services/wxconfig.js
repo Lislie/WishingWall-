@@ -68,7 +68,7 @@ class wxToken {
     $wxticket = wx_get_jsapi_ticket()
     $wxOri = sprintf("jsapi_ticket=%s&noncestr=%s&timestamp=%s&url=%s",
       $wxticket, $wxnonceStr, $timestamp,
-      'http://www.etherchen.com/'
+      'http://www.etherchen.com/#/share/fc3825e6-b05c-486e-8ac0-a1212949d031'
     )
     $wxSha1 = sha1($wxOri)
     return $wxSha1

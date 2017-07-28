@@ -5,7 +5,7 @@
     overflow:hidden
     width 100%
     height rem(1334)
-    background-image url("背景2.png");
+    background-image url("http://img.ppx.easyto.com/images/wish/wish/背景2.png");
     .wishHeader
       width 100%
       height: rem(266)
@@ -20,7 +20,7 @@
         display flex
         align-items center /*垂直居中*/
         justify-content center /*水平居中*/
-        background-image url("城堡.png")
+        background-image url("http://img.ppx.easyto.com/images/wish/wish/城堡.png")
         background-size 100%
         .listTitle
           font-size rem(50)
@@ -63,7 +63,7 @@
             width rem(66)
             height rem(62)
             position absolute
-            background-image url("皇冠.png")
+            background-image url("http://img.ppx.easyto.com/images/wish/wish/皇冠.png")
             background-size 100%
             left rem(60)
         &:nth-child(3)
@@ -74,7 +74,7 @@
             width rem(66)
             height rem(62)
             position absolute
-            background-image url("银冠.png")
+            background-image url("http://img.ppx.easyto.com/images/wish/wish/银冠.png")
             background-size 100%
             right rem(205)
         .rangKing:first-of-type
@@ -140,17 +140,17 @@
               display inline-block
               width rem(26)
               height rem(21)
-              background url("爱心.png") no-repeat
+              background url("http://img.ppx.easyto.com/images/wish/wish/爱心.png") no-repeat
               background-size 100%
               vertical-align middle
             .heartShow
               display inline-block
               width rem(26)
               height rem(21)
-              background url("爱心-拷贝-2.png") no-repeat
+              background url("http://img.ppx.easyto.com/images/wish/wish/爱心-拷贝-2.png") no-repeat
               background-size 100%
               vertical-align middle
-            .heartNum
+            .heartNumbe
               vertical-align middle
               font-size rem(30)
     .wishFooter2
@@ -159,7 +159,7 @@
       .button
         width rem(260)
         height rem(115)
-        background-image url("发表心愿.png")
+        background-image url("http://img.ppx.easyto.com/images/wish/wish/发表心愿.png")
         background-size 100%
         background-color transparent
         border none
@@ -177,7 +177,7 @@
         width rem(624)
         height rem(894)
         margin rem(114) rem(64) 0
-        background-image url("./飞毯.png")
+        background-image url("http://img.ppx.easyto.com/images/wish/wish/飞毯.png")
         background-size 100%
         display flex
         align-items center /*垂直居中*/
@@ -211,13 +211,13 @@
                   width rem(24)
                   height rem(23)
                   display inline-block
-                  background-image url("星.png")
+                  background-image url("http://img.ppx.easyto.com/images/wish/wish/星.png")
                   background-size 100%
       .rulesClos
         display inline-block
         width rem(66)
         height rem(66)
-        background-image url("./关闭-6.png")
+        background-image url("http://img.ppx.easyto.com/images/wish/wish/关闭-6.png")
         background-size 100%
         margin-top rem(8)
 
@@ -287,7 +287,7 @@
         <h1 class="listTitle">心愿墙</h1>
       </div>
       <div class="rules" @click="showRules">
-        <img src="./活动规则.png" alt="活动规则" class="rulesImg">
+        <img src="http://img.ppx.easyto.com/images/wish/wish/活动规则.png" alt="活动规则" class="rulesImg">
         <h3 class="rulesH3">活动规则</h3>
       </div>
     </header>

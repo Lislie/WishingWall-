@@ -3,7 +3,7 @@
   .page7{
     width: 100%;
     height:rem(1334);
-    background: url("./背景3.png") no-repeat center;
+    background: url("http://img.ppx.easyto.com/images/wish/page7/背景3.png") no-repeat center;
     background-size: 100% 100%;
     padding: rem(20) rem(32) rem(32);
     overflow: hidden;
@@ -76,7 +76,7 @@
     width: rem(256);
     height: rem(118);
     margin: 0 auto;
-    background: url("./page7_button.png") no-repeat center;
+    background: url("http://img.ppx.easyto.com/images/wish/page7/page7_button.png") no-repeat center;
     background-size: 100% 100%;
     color: #fff;
     font-size: rem(30);
@@ -272,8 +272,7 @@
                 nickName:this.nickName,
                 headUrl:this.headImgUrl,
                 channel:'2',
-                userId:this.openId
-
+                userId:'oHSNYwK0DNBLRf6ts3qbzzedILDQ'
               }
               console.log('weixin')
               IndexService.sendWish(datasave)

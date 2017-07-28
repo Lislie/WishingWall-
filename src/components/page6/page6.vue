@@ -3,7 +3,7 @@
   .page6
     width 100%
     height 100%
-    background-image url("背景3.png")
+    background-image url("http://img.ppx.easyto.com/images/wish/page6/背景3.png")
     background-size 100%
     .headpage6
       width 100%
@@ -97,9 +97,25 @@
         img
           margin-top rem(38)
           width rem(256)
-
-
-
+    .page6Rules
+      position absolute
+      z-index: 1000
+      width 100%
+      height 100%
+      background-image url("http://img.ppx.easyto.com/images/wish/page4/许愿H5-页面新-7-浮层.png")
+      background-repeat no-repeat
+      background-size 100%
+      top 0
+      left 0
+      .page6Clos
+        display inline-block
+        width rem(66)
+        height rem(66)
+        background-image url("http://img.ppx.easyto.com/images/wish/page4/关闭-6.png")
+        background-size 100%
+        position absolute
+        top rem(400)
+        left rem(350)
 </style>
 
 <template>
@@ -120,43 +136,100 @@
         </div>
       </div>
       <div class="page6Heart">
-        <img src="./爱心-拷贝-4.png" class="bigHeart">
+        <img src="http://img.ppx.easyto.com/images/wish/page6/爱心-拷贝-4.png" class="bigHeart">
         <p class="heartNum">{{wish.praiseNum}}</p>
       </div>
     </div>
     <footer class="footpage6">
       <div class="btnpage6">
-        <button class="btnLeft" @click="invite">邀请小伙伴帮我点赞</button>
+        <button class="btnLeft" @click="showRules">邀请小伙伴帮我点赞</button>
         <button class="btnRight" @click="toIndex">返回首页</button>
       </div>
       <div class="page6ma">
         <p>扫描二维码，下载皮皮虾旅行哦</p>
-        <img src="./第九页二维码.png" alt="">
+        <img src="http://img.ppx.easyto.com/images/wish/page6/第九页二维码.png" alt="">
       </div>
     </footer>
+    <div v-if="page6Show" class="page6Rules" name="Fade">
+      <span class="page6Clos" @click="hideRules"></span>
+    </div>
   </div>
 
 </template>
 
 <script type="text/ecmascript-6">
   import axios from 'axios'
-
+  import IndexService from '../../services/indexService'
   const ERR_OK = 200
   export default {
     data () {
       return {
         wish: {},
         rulesShow: false,
-        id:'',
-        userId:''
+        page6Show: false,
+        id: '',
+        userId: '',
+        url:''
       }
     },
     created () {
-       this.id=this.$route.params.id
+      this.id = this.$route.params.id
       // 设置一个开关来避免重负请求数据
       this.loadData()
+      this.url = "http://www.etherchen.com/#/share/"+this.id
+    },
+    mounted () {
+      this.id = this.$route.params.id
+      this.url = "http://www.etherchen.com/#/share/"+this.id
+      const url = document.location.href
+      IndexService.signature(url)
+        .then((res) => {// 获得签名配置
+          let Data = res.data;
+          console.log(Data)
+          // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作
+          wx.config({
+            debug: true, // 开启调试模式,开发时可以开启
+            appId: 'wxd934d895968c256e',   // 必填，公众号的唯一标识   由接口返回
+            timestamp: Data.timestamp, // 必填，生成签名的时间戳 由接口返回
+            nonceStr: Data.nonceStr,    // 必填，生成签名的随机串 由接口返回
+            signature: Data.signature,   // 必填，签名 由接口返回
+            jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'] // 此处填你所用到的方法
+          })
+        })
+      wx.ready(() => {
+        wx.onMenuShareAppMessage({
+          title: '琛的测试页面', // 分享标题
+          desc: '试试看行不行？', // 分享描述
+          link: this.url, // 分享链接
+          imgUrl: 'http://tvax4.sinaimg.cn/crop.0.24.1242.1242.180/7ca780bely8fggcd26rdej20yi0zvwh7.jpg', // 分享图标
+          type: '', // 分享类型,music、video或link，不填默认为link
+          dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+          success: function () {
+            // 用户确认分享后执行的回调函数
+            alert('欢迎进入琛的页面')
+          },
+          cancel: function () {
+            // 用户取消分享后执行的回调函数
+            alert('早点滚')
+          }
+        })
+        wx.onMenuShareTimeline({
+          title: shareTitle, // 分享标题
+          imgUrl: imgUrl, // 分享图标
+          success: function () {
+            // 用户确认分享后执行的回调函数
+          },
+          cancel: function () {
+            // 用户取消分享后执行的回调函数
+          }
+        })
+      })
     },
     methods: {
+      wx (title, desc, link){
+
+      },
+
       invite () {
         this.$router.push({path: '/share'})
       },
@@ -164,19 +237,28 @@
         this.$router.push({path: '/'})
       },
       loadData(){
-         axios.get('http://101.251.240.134:8080/wish/api/v1/wish/'+this.id)
-        .then((response) => {
-          if (response.data.code === ERR_OK) {
-            this.wish = response.data.data
-            console.log(this.wish)
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+        axios.get('http://101.251.240.134:8080/wish/api/v1/wish/' + this.id)
+          .then((response) => {
+            if (response.data.code === ERR_OK) {
+              this.wish = response.data.data
+              console.log(this.wish)
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      },
+      showRules()
+      {
+        this.page6Show = true
+      }
+      ,
+      hideRules()
+      {
+        this.page6Show = false
+
       }
     }
   }
-
 </script>
 

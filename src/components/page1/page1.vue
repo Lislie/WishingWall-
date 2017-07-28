@@ -1,16 +1,16 @@
 <template>
   <div class="page1">
-    <img src="./logo_ppx.png" class="logo"/>
+    <img src="http://img.ppx.easyto.com/images/wish/page1/logo_ppx.png" class="logo"/>
     <div class="imgs">
-      <img id="lamp" src="./page1_lamp.png" />
-      <img id="alading" src="./alading.png" />
-      <img id="cloudSmall" src="./cloudy_small.png" />
-      <img id="cloud" src="./cloud_big.png" />
+      <img id="lamp" src="http://img.ppx.easyto.com/images/wish/page1/page1_lamp.png" />
+      <img id="alading" src="http://img.ppx.easyto.com/images/wish/page1/alading.png" />
+      <img id="cloudSmall" src="http://img.ppx.easyto.com/images/wish/page1/cloudy_small.png" />
+      <img id="cloud" src="http://img.ppx.easyto.com/images/wish/page1/cloud_big.png" />
     </div>
     <div class="outWords">
-      <img id="word1" src="./world.gif" />
-      <img id="word2" src="./wish.gif" />
-      <img id="word3" src="./come.gif" />
+      <img id="word1" src="http://img.ppx.easyto.com/images/wish/page1/world.gif" />
+      <img id="word2" src="http://img.ppx.easyto.com/images/wish/page1/wish.gif" />
+      <img id="word3" src="http://img.ppx.easyto.com/images/wish/page1/come.gif" />
     </div>
   </div>
 </template>
@@ -89,7 +89,7 @@
   @import '../../assets/styl/rem.styl'
   .page1{
     width: 100%
-    background: url("./page1_bg.png") no-repeat center
+    background: url("http://img.ppx.easyto.com/images/wish/page1/page1_bg.png") no-repeat center
     background-size: 100% 100%
     text-align: center
     height rem(1334)

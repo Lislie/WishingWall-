@@ -71,6 +71,16 @@ class IndexService {
     })
   }
 
+  signature(url){
+    return xhr({
+      url:'signature',
+      method:'post',
+      body:{
+        url:url
+      }
+    })
+  }
+
   wishwall(page,activityId,userId,channel){
     return xhr({
       url:'wish?pageNum='+page+'&activityId='+activityId+'&userId='+userId+'&channel='+channel

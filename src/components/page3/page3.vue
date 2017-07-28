@@ -5,7 +5,7 @@
     height rem(1334)
     color: #f8cb0c;
     text-align: center;
-    background: url("page3_bg.png") no-repeat center;
+    background: url("http://img.ppx.easyto.com/images/wish/page3/page3_bg.png") no-repeat center;
     background-size: 100% 100%;
     position: relative;
     overflow: hidden;
@@ -18,12 +18,13 @@
       padding: 0 rem(120);
       text-align: left;
       line-height: rem(46);
-      z-index: 10;
+      position relative
+      z-index 1000
     }
     .photo{
       width: rem(303);
       height: rem(399);
-      background: url("page3_box.png") no-repeat center;
+      background: url("http://img.ppx.easyto.com/images/wish/page3/page3_box.png") no-repeat center;
       background-size: 100% 100%;
       margin: 0 auto;
       margin-top: rem(54);
@@ -73,9 +74,9 @@
       position: absolute;
       bottom: 0;
       left: 15%;
-      background: url("page3_bottom.png") no-repeat center;
+      background: url("http://img.ppx.easyto.com/images/wish/page3/page3_bottom.png") no-repeat center;
       background-size: 100% 100%;
-      z-index: 0;
+      z-index:1;
     }
 
     @keyframes  carpet{
@@ -141,11 +142,11 @@
   <div class="page3">
     <p>国际知名行程规划师<br />为您量身定制行程</p>
     <div class="photo">
-      <img id="photo" src="./page3_photo.png">
+      <img id="photo" src="http://img.ppx.easyto.com/images/wish/page3/page3_photo.png">
     </div>
     <div class="carpet">
-      <img id="carpetImg" src="./page3_carpet.png" />
-      <img src="./page3_shadow.png" />
+      <img id="carpetImg" src="http://img.ppx.easyto.com/images/wish/page3/page3_carpet.png" />
+      <img src="http://img.ppx.easyto.com/images/wish/page3/page3_shadow.png" />
     </div>
     <h1>薛峰</h1>
     <p class="brief">旅日十年，资深背包客，旅游定制专家，PADI的潜水教练、滑雪教练，想来段不一样的旅行吗？快来许愿吧！</p>

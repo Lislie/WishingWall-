@@ -98,7 +98,6 @@
             }
           },
           resetAmation(){
-            console.log("wozhix")
             clearTimeout(this.intervalid1)
             clearTimeout(this.intervalid2)
             clearTimeout(this.intervalid3)

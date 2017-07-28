@@ -2,7 +2,7 @@
   @import '../../assets/styl/rem.styl'
   .page2{
     width: 100%;
-    background: url("./page2_bg.png") no-repeat center;
+    background: url("http://img.ppx.easyto.com/images/wish/page2/page2_bg.png") no-repeat center;
     background-size: 100% 100%;
     text-align: center;
     height rem(1334)
@@ -18,7 +18,7 @@
   .page2 >div:nth-child(1){
     width: rem(547);
     height: rem(457);
-    background: url("./page2_box.png") no-repeat center;
+    background: url("http://img.ppx.easyto.com/images/wish/page2/page2_box.png") no-repeat center;
     background-size: 100% 100%;
     font-size: rem(41);
     color: #5e2900;
@@ -35,7 +35,7 @@
   .page2Lamp{
     width: rem(343);
     height: rem(243);
-    background: url("./page2_lamp.png") no-repeat center;
+    background: url("http://img.ppx.easyto.com/images/wish/page2/page2_lamp.png") no-repeat center;
     background-size: 100% 100%;
     margin: rem(547) 0 0 rem(165);
   }
