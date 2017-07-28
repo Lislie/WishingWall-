@@ -177,7 +177,8 @@
       this.id = this.$route.params.id
       this.url = "http://www.etherchen.com/#/share/" + this.id
       const url = document.location.href
-      IndexService.signature(url)
+      const url2 = location.href.split('#')[0]
+      IndexService.signature(url2)
         .then((res) => {// 获得签名配置
           let Data = res.data;
           console.log(Data)

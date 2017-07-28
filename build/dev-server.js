@@ -23,31 +23,8 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 var proxyTable = config.dev.proxyTable
 
 var app = express()
-var appData = require('../static/data.json')
-var wish = appData.data
-var code = appData.code
 
 
-var apiRoutes = express.Router()
-
-apiRoutes.get('/wish',function (req, res) {
-  res.json({
-    code:code,
-    data:wish
-  })
-})
-apiRoutes.post('/v1/wish/',function (req, res) {
-  res.json({
-    data:res.data
-  })
-})
-// apiRoutes.post('/api/v1/wish',function (req, res) {
-//   res.json({
-//
-//   })
-// })
-
-app.use('/api',apiRoutes);
 
 
 var compiler = webpack(webpackConfig)
